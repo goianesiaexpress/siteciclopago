@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💚</text></svg>">
+  <noscript><style>.loading-screen{display:none !important}.fade-in{opacity:1 !important;transform:none !important}</style></noscript>
+  <style>.loading-screen{animation: autoHideLoading 0.5s ease 4s forwards}@keyframes autoHideLoading{to{opacity:0;visibility:hidden;pointer-events:none}}</style>
 </head>
 <body>
 
@@ -25,6 +27,20 @@
       <p class="loading-text">Carregando experiência...</p>
     </div>
   </div>
+  <script>
+    // Fallback inline: garante que loading some mesmo se scripts externos falharem (CDN bloqueado)
+    (function(){
+      var el = document.getElementById('loadingScreen');
+      if(el){
+        setTimeout(function(){ el.classList.add('hidden'); document.body.style.overflow='auto'; }, 2500);
+        window.addEventListener('error', function(){ el.classList.add('hidden'); });
+      }
+      // Fallback para fade-in: se IntersectionObserver falhar, mostra tudo após 3s
+      setTimeout(function(){
+        document.querySelectorAll('.fade-in:not(.visible)').forEach(function(f){ f.classList.add('visible'); });
+      }, 3500);
+    })();
+  </script>
 
   <!-- HEADER / NAV -->
   <header id="header">
