@@ -118,5 +118,41 @@ const DB = {
     supabase.auth.onAuthStateChange((event, session) => {
       callback(event, session);
     });
+  },
+
+  // Verificar se usuário é SUPER_ADMIN (via RPC is_super_admin)
+  async isSuperAdmin() {
+    if (!supabase) return false;
+    try {
+      const { data, error } = await supabase.rpc('is_super_admin');
+      if (!error && typeof data === 'boolean') return data;
+      if (error) console.warn('is_super_admin rpc falhou, fallback para users:', error.message);
+    } catch (e) {
+      console.warn('is_super_admin exception:', e);
+    }
+    // Fallback direto na tabela users
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return false;
+      const { data: profile, error } = await supabase.from('users').select('role').eq('id', user.id).single();
+      if (error) {
+        console.warn('Fallback users role falhou:', error.message);
+        return false;
+      }
+      return profile?.role === 'SUPER_ADMIN';
+    } catch (e) {
+      console.warn('Fallback exception:', e);
+      return false;
+    }
+  },
+
+  // Buscar role do usuário logado
+  async getUserRole() {
+    if (!supabase) return null;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+    const { data, error } = await supabase.from('users').select('role').eq('id', user.id).single();
+    if (error) return null;
+    return data?.role || null;
   }
 };

@@ -152,17 +152,21 @@ async function loadSiteConfig() {
 async function saveSiteConfig(config) {
   _cachedConfig = config;
 
-  // Salva no Supabase
+  // Salva no Supabase (apenas SUPER_ADMIN consegue via RLS)
+  let ok = true;
   if (typeof DB !== 'undefined') {
     try {
-      await DB.saveAll(config);
+      ok = await DB.saveAll(config);
+      if (!ok) console.warn('Supabase saveAll retornou false (RLS SUPER_ADMIN?)');
     } catch (e) {
       console.warn('Erro ao salvar no Supabase:', e);
+      ok = false;
     }
   }
 
   // Também salva no localStorage como backup
   localStorage.setItem('siteConfig', JSON.stringify(config));
+  return ok;
 }
 
 async function resetSiteConfig() {

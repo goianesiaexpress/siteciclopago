@@ -23,6 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
 async function checkAuth() {
   const session = await DB.getSession();
   if (session) {
+    const isSuper = await DB.isSuperAdmin();
+    if (!isSuper) {
+      await DB.logout();
+      showLogin();
+      document.getElementById('loginError').textContent = 'Acesso restrito: apenas SUPER_ADMIN (ciclopago@gmail.com) pode acessar o painel.';
+      return;
+    }
     showPanel(session.user.email);
   } else {
     showLogin();
@@ -59,9 +66,20 @@ function setupLoginForm() {
       error.textContent = result.error;
       btn.textContent = 'Entrar';
       btn.disabled = false;
-    } else {
-      showPanel(result.user.email);
+      return;
     }
+
+    // Verifica se é SUPER_ADMIN (único autorizado)
+    const isSuper = await DB.isSuperAdmin();
+    if (!isSuper) {
+      await DB.logout();
+      error.textContent = 'Acesso negado: apenas SUPER_ADMIN (ciclopago@gmail.com) pode acessar o painel. Seu usuário não tem permissão.';
+      btn.textContent = 'Entrar';
+      btn.disabled = false;
+      return;
+    }
+
+    showPanel(result.user.email);
   });
 }
 
@@ -299,7 +317,20 @@ async function saveAll() {
     ctaText: getText('cfg-banner-ctaText')
   };
 
-  await saveSiteConfig(config);
+  // Verifica SUPER_ADMIN antes de salvar
+  const isSuper = await DB.isSuperAdmin();
+  if (!isSuper) {
+    setSyncStatus('Erro');
+    showToast('Apenas SUPER_ADMIN pode salvar. Faça login com ciclopago@gmail.com', true);
+    return;
+  }
+
+  const ok = await saveSiteConfig(config);
+  if (!ok) {
+    setSyncStatus('Erro');
+    showToast('Falha ao salvar no Supabase. Verifique permissão SUPER_ADMIN.', true);
+    return;
+  }
   setSyncStatus('Salvo');
   showToast('Alterações salvas no Supabase!');
 }
