@@ -154,12 +154,26 @@
 
     const dlBtn = document.querySelector('.download-btn');
     if (dlBtn) {
-      // Garante link válido, fallback para APK padrão
       const link = c.download.btnLink && c.download.btnLink.trim() ? c.download.btnLink : './downloads/ciclopago.apk';
       dlBtn.href = link;
-      dlBtn.setAttribute('download', '');
+      dlBtn.setAttribute('download', 'ciclopago.apk');
       dlBtn.style.pointerEvents = 'auto';
       dlBtn.style.opacity = '1';
+      dlBtn.removeAttribute('target');
+      // Garante download direto mesmo cross-origin (fetch + blob)
+      dlBtn.addEventListener('click', function(e) {
+        const href = this.href;
+        if (href.includes('supabase.co')) {
+          e.preventDefault();
+          fetch(href).then(r=>r.blob()).then(b=>{
+            const url = URL.createObjectURL(b);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'ciclopago.apk';
+            document.body.appendChild(a); a.click();
+            setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 1000);
+          }).catch(()=>{ window.location.href = href; });
+        }
+      });
       const svg = dlBtn.querySelector('svg');
       const badge = dlBtn.querySelector('.btn-badge');
       dlBtn.textContent = '';
@@ -292,18 +306,43 @@
     const bannerBtn = document.querySelector('#bannerDownloadBtn') || document.querySelector('#androidBanner .btn');
     if (bannerBtn) {
       bannerBtn.textContent = c.androidBanner.ctaText;
-      // Baixar Agora deve baixar direto o APK, não só scroll
       const dlLink = (c.download && c.download.btnLink) ? c.download.btnLink : './downloads/ciclopago.apk';
       bannerBtn.href = dlLink;
-      bannerBtn.setAttribute('download', '');
+      bannerBtn.setAttribute('download', 'ciclopago.apk');
+      bannerBtn.removeAttribute('target');
+      bannerBtn.addEventListener('click', function(e) {
+        const href = this.href;
+        if (href.includes('supabase.co')) {
+          e.preventDefault();
+          fetch(href).then(r=>r.blob()).then(b=>{
+            const url = URL.createObjectURL(b);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'ciclopago.apk';
+            document.body.appendChild(a); a.click();
+            setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 1000);
+          }).catch(()=>{ window.location.href = href; });
+        }
+      });
     }
   } else if (c.download) {
-    // Mesmo sem banner config, garante que o botão do banner baixa o APK
     const bannerBtn = document.querySelector('#bannerDownloadBtn');
     if (bannerBtn) {
       const dlLink = c.download.btnLink || './downloads/ciclopago.apk';
       bannerBtn.href = dlLink;
-      bannerBtn.setAttribute('download', '');
+      bannerBtn.setAttribute('download', 'ciclopago.apk');
+      bannerBtn.addEventListener('click', function(e) {
+        const href = this.href;
+        if (href.includes('supabase.co')) {
+          e.preventDefault();
+          fetch(href).then(r=>r.blob()).then(b=>{
+            const url = URL.createObjectURL(b);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'ciclopago.apk';
+            document.body.appendChild(a); a.click();
+            setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 1000);
+          }).catch(()=>{ window.location.href = href; });
+        }
+      });
     }
   }
 })();
