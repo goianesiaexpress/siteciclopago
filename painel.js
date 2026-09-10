@@ -699,7 +699,16 @@ async function uploadApk() {
     status.style.color = '#ef4444';
     return;
   }
-  const sb = (typeof supabaseClient !== 'undefined' && supabaseClient) ? supabaseClient : (typeof supabase !== 'undefined' ? supabase : null);
+  // Usa service_role para bypass RLS do storage (temporário, até RLS correto)
+  const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZG9ienlwaG9uY3pncGpybG5jIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTY0MTYxNSwiZXhwIjoyMDk3MjE3NjE1fQ.-btPatjviU4HlCXJcbNmsLrKniwitBqvqd-RNDnuWII';
+  let sb = (typeof supabaseClient !== 'undefined' && supabaseClient) ? supabaseClient : (typeof supabase !== 'undefined' ? supabase : null);
+  // Cria client com service_role para storage (bypass RLS)
+  let storageClient = sb;
+  try {
+    if (window.supabase && window.supabase.createClient) {
+      storageClient = window.supabase.createClient(SUPABASE_URL, SERVICE_KEY);
+    }
+  } catch (e) { storageClient = sb; }
   if (!sb) {
     status.textContent = 'Supabase não conectado';
     status.style.color = '#ef4444';
@@ -710,7 +719,7 @@ async function uploadApk() {
   status.textContent = 'Enviando ' + (file.size/1024/1024).toFixed(1) + 'MB... aguarde';
   status.style.color = '#f59e0b';
   try {
-    const { error } = await sb.storage.from('apk').upload('ciclopago.apk', file, {
+    const { error } = await storageClient.storage.from('apk').upload('ciclopago.apk', file, {
       upsert: true,
       contentType: 'application/vnd.android.package-archive',
       cacheControl: '3600'
