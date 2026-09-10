@@ -702,11 +702,14 @@ async function uploadApk() {
   // Usa service_role para bypass RLS do storage (temporário, até RLS correto)
   const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZG9ienlwaG9uY3pncGpybG5jIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTY0MTYxNSwiZXhwIjoyMDk3MjE3NjE1fQ.-btPatjviU4HlCXJcbNmsLrKniwitBqvqd-RNDnuWII';
   let sb = (typeof supabaseClient !== 'undefined' && supabaseClient) ? supabaseClient : (typeof supabase !== 'undefined' ? supabase : null);
-  // Cria client com service_role para storage (bypass RLS)
+  // Cria client com service_role para storage (bypass RLS) - usa supabaseLib preservada
   let storageClient = sb;
   try {
-    if (window.supabase && window.supabase.createClient) {
-      storageClient = window.supabase.createClient(SUPABASE_URL, SERVICE_KEY);
+    const lib = (typeof window.supabaseLib !== 'undefined' && window.supabaseLib) ? window.supabaseLib : (window.supabase && window.supabase.createClient ? window.supabase : null);
+    if (lib && lib.createClient) {
+      storageClient = lib.createClient(SUPABASE_URL, SERVICE_KEY);
+    } else if (window.supabaseLib && window.supabaseLib.createClient) {
+      storageClient = window.supabaseLib.createClient(SUPABASE_URL, SERVICE_KEY);
     }
   } catch (e) { storageClient = sb; }
   if (!sb) {
