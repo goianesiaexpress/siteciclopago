@@ -59,27 +59,46 @@ function setupLoginForm() {
     btn.textContent = 'Entrando...';
     btn.disabled = true;
     error.textContent = '';
+    error.style.display = 'block';
 
-    const result = await DB.login(email, password);
+    try {
+      const result = await DB.login(email, password);
 
-    if (result.error) {
-      error.textContent = result.error;
+      if (result.error) {
+        error.textContent = result.error;
+        btn.textContent = 'Entrar';
+        btn.disabled = false;
+        return;
+      }
+
+      // Verifica se é SUPER_ADMIN (único autorizado) com timeout de 8s
+      let isSuper = false;
+      try {
+        const timeout = new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 8000));
+        isSuper = await Promise.race([DB.isSuperAdmin(), timeout]);
+      } catch (err) {
+        console.warn('isSuperAdmin falhou/timeout:', err);
+        error.textContent = 'Erro ao verificar permissão SUPER_ADMIN. Tente novamente.';
+        btn.textContent = 'Entrar';
+        btn.disabled = false;
+        return;
+      }
+
+      if (!isSuper) {
+        try { await DB.logout(); } catch(_){}
+        error.textContent = 'Acesso negado: apenas SUPER_ADMIN (ciclopago@gmail.com) pode acessar o painel. Seu usuário não tem permissão.';
+        btn.textContent = 'Entrar';
+        btn.disabled = false;
+        return;
+      }
+
+      showPanel(result.user.email);
+    } catch (err) {
+      console.error('Erro inesperado no login:', err);
+      error.textContent = 'Erro inesperado: ' + (err.message || err);
       btn.textContent = 'Entrar';
       btn.disabled = false;
-      return;
     }
-
-    // Verifica se é SUPER_ADMIN (único autorizado)
-    const isSuper = await DB.isSuperAdmin();
-    if (!isSuper) {
-      await DB.logout();
-      error.textContent = 'Acesso negado: apenas SUPER_ADMIN (ciclopago@gmail.com) pode acessar o painel. Seu usuário não tem permissão.';
-      btn.textContent = 'Entrar';
-      btn.disabled = false;
-      return;
-    }
-
-    showPanel(result.user.email);
   });
 }
 
