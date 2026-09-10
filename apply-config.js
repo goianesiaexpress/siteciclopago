@@ -58,6 +58,33 @@
     });
   }
 
+  // Metrics
+  if (c.metrics && c.metrics.items) {
+    const metricCards = document.querySelectorAll('.metric-card');
+    c.metrics.items.forEach((m, i) => {
+      if (metricCards[i]) {
+        const counter = metricCards[i].querySelector('.counter');
+        const desc = metricCards[i].querySelector('.metric-desc');
+        const title = metricCards[i].querySelector('.metric-title');
+        if (counter) {
+          counter.setAttribute('data-target', m.value);
+          counter.textContent = '0';
+          // Sufixo fica como nó de texto após o span
+          if (title) {
+            // Remove sufixo anterior (texto após span)
+            const suffixNode = title.childNodes[1];
+            if (suffixNode && suffixNode.nodeType === 3) {
+              suffixNode.textContent = m.suffix || '';
+            } else if (m.suffix) {
+              title.appendChild(document.createTextNode(m.suffix));
+            }
+          }
+        }
+        if (desc) desc.textContent = m.label;
+      }
+    });
+  }
+
   // Features section
   if (c.features) {
     const featTag = document.querySelector('#recursos .section-tag');
@@ -127,14 +154,19 @@
 
     const dlBtn = document.querySelector('.download-btn');
     if (dlBtn) {
-      dlBtn.href = c.download.btnLink;
+      // Garante link válido, fallback para APK padrão
+      const link = c.download.btnLink && c.download.btnLink.trim() ? c.download.btnLink : './downloads/ciclopago.apk';
+      dlBtn.href = link;
+      dlBtn.setAttribute('download', '');
+      dlBtn.style.pointerEvents = 'auto';
+      dlBtn.style.opacity = '1';
       const svg = dlBtn.querySelector('svg');
       const badge = dlBtn.querySelector('.btn-badge');
       dlBtn.textContent = '';
       if (svg) dlBtn.appendChild(svg);
-      dlBtn.appendChild(document.createTextNode(' ' + c.download.btnText + ' '));
+      dlBtn.appendChild(document.createTextNode(' ' + (c.download.btnText || 'Baixar CicloPago.apk') + ' '));
       if (badge) {
-        badge.textContent = c.download.version;
+        badge.textContent = c.download.version || 'v1.0.4';
         dlBtn.appendChild(badge);
       }
     }

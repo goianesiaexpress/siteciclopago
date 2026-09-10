@@ -231,6 +231,10 @@ async function saveAll() {
     badges: config.hero?.badges || []
   };
 
+  config.metrics = {
+    items: config.metrics?.items || []
+  };
+
   config.features = {
     tag: getText('cfg-features-tag'),
     subtitle: getText('cfg-features-subtitle'),
