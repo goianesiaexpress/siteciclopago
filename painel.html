@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel CicloPago - Gerenciar Conteúdo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="painel.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <img src="assets/logo_app.png" alt="CicloPago" class="login-logo">
+      <h1>Painel CicloPago</h1>
+      <p>Faça login para gerenciar o conteúdo do site</p>
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="seu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+        </div>
+        <div class="login-error" id="loginError"></div>
+        <button type="submit" class="btn btn-primary btn-block" id="btnLogin">
+          Entrar
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PANEL (escondido até login) -->
+  <div class="panel-wrapper" id="panelWrapper" style="display:none;">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="assets/logo_app.png" alt="CicloPago" class="sidebar-logo">
+        <h2>Painel</h2>
+        <button class="sidebar-close" id="sidebarClose">&times;</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#section-geral" class="nav-item active" data-section="geral">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Geral
+        </a>
+        <a href="#section-hero" class="nav-item" data-section="hero">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Hero
+        </a>
+        <a href="#section-metricas" class="nav-item" data-section="metricas">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>
+          Métricas
+        </a>
+        <a href="#section-recursos" class="nav-item" data-section="recursos">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Recursos
+        </a>
+        <a href="#section-como-funciona" class="nav-item" data-section="como-funciona">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Como Funciona
+        </a>
+        <a href="#section-download" class="nav-item" data-section="download">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+        <a href="#section-instalacao" class="nav-item" data-section="instalacao">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          Instalação
+        </a>
+        <a href="#section-faq" class="nav-item" data-section="faq">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          FAQ
+        </a>
+        <a href="#section-depoimentos" class="nav-item" data-section="depoimentos">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Depoimentos
+        </a>
+        <a href="#section-rodape" class="nav-item" data-section="rodape">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          Rodapé
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info" id="userInfo">
+          <span class="user-email" id="userEmail"></span>
+          <button class="btn-logout" id="btnLogout" title="Sair">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+        <a href="index.html" class="btn-view-site" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Ver Site
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <button class="menu-toggle" id="menuToggle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <h1 class="topbar-title">Gerenciar Conteúdo</h1>
+        <div class="topbar-actions">
+          <span class="sync-status" id="syncStatus">Salvo</span>
+          <button class="btn btn-outline" id="btnReset">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+            Restaurar
+          </button>
+          <button class="btn btn-primary" id="btnSave">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Salvar
+          </button>
+        </div>
+      </header>
+
+      <!-- SECTIONS -->
+      <div class="sections-container">
+
+        <!-- GERAL -->
+        <section class="panel-section active" id="section-geral">
+          <div class="section-header">
+            <h2>Configurações Gerais</h2>
+            <p>Informações básicas do site</p>
+          </div>
+          <div class="form-group">
+            <label>Título do Site</label>
+            <input type="text" id="cfg-site-title" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Descrição (Meta Tags)</label>
+            <textarea id="cfg-site-description" class="form-textarea" rows="3"></textarea>
+          </div>
+        </section>
+
+        <!-- HERO -->
+        <section class="panel-section" id="section-hero">
+          <div class="section-header">
+            <h2>Seção Hero</h2>
+            <p>Banner principal com chamada para ação</p>
+          </div>
+          <div class="form-group">
+            <label>Badge (versão)</label>
+            <input type="text" id="cfg-hero-badge" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Título (parte estática)</label>
+            <input type="text" id="cfg-hero-titlePrefix" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Título (parte destacada)</label>
+            <input type="text" id="cfg-hero-titleHighlight" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Subtítulo</label>
+            <textarea id="cfg-hero-subtitle" class="form-textarea" rows="2"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Texto do Botão Principal</label>
+              <input type="text" id="cfg-hero-ctaText" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Link do Botão Principal</label>
+              <input type="text" id="cfg-hero-ctaLink" class="form-input">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Texto Botão Secundário</label>
+              <input type="text" id="cfg-hero-secondaryText" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Link Botão Secundário</label>
+              <input type="text" id="cfg-hero-secondaryLink" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Badges do Hero</label>
+            <div id="hero-badges-list" class="editable-list"></div>
+            <button class="btn-add-item" onclick="addHeroBadge()">+ Adicionar Badge</button>
+          </div>
+        </section>
+
+        <!-- METRICAS -->
+        <section class="panel-section" id="section-metricas">
+          <div class="section-header">
+            <h2>Métricas</h2>
+            <p>Números exibidos na seção de métricas</p>
+          </div>
+          <div id="metrics-list" class="editable-list"></div>
+          <button class="btn-add-item" onclick="addMetric()">+ Adicionar Métrica</button>
+        </section>
+
+        <!-- RECURSOS -->
+        <section class="panel-section" id="section-recursos">
+          <div class="section-header">
+            <h2>Recursos</h2>
+            <p>Funcionalidades exibidas no site</p>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tag da Seção</label>
+              <input type="text" id="cfg-features-tag" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Subtítulo</label>
+              <input type="text" id="cfg-features-subtitle" class="form-input">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Título (parte estática)</label>
+              <input type="text" id="cfg-features-title" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Título (destacado)</label>
+              <input type="text" id="cfg-features-titleHighlight" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Itens dos Recursos</label>
+            <div id="features-list" class="editable-list"></div>
+            <button class="btn-add-item" onclick="addFeature()">+ Adicionar Recurso</button>
+          </div>
+        </section>
+
+        <!-- COMO FUNCIONA -->
+        <section class="panel-section" id="section-como-funciona">
+          <div class="section-header">
+            <h2>Como Funciona</h2>
+            <p>Passos explicativos</p>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tag da Seção</label>
+              <input type="text" id="cfg-hiw-tag" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Subtítulo</label>
+              <input type="text" id="cfg-hiw-subtitle" class="form-input">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Título (parte estática)</label>
+              <input type="text" id="cfg-hiw-title" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Título (destacado)</label>
+              <input type="text" id="cfg-hiw-titleHighlight" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Passos</label>
+            <div id="hiw-steps-list" class="editable-list"></div>
+            <button class="btn-add-item" onclick="addHiwStep()">+ Adicionar Passo</button>
+          </div>
+        </section>
+
+        <!-- DOWNLOAD -->
+        <section class="panel-section" id="section-download">
+          <div class="section-header">
+            <h2>Seção Download</h2>
+            <p>Botão e informações de download</p>
+          </div>
+          <div class="form-group">
+            <label>Título</label>
+            <input type="text" id="cfg-download-title" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Subtítulo</label>
+            <textarea id="cfg-download-subtitle" class="form-textarea" rows="2"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Texto do Botão</label>
+              <input type="text" id="cfg-download-btnText" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Link do APK</label>
+              <input type="text" id="cfg-download-btnLink" class="form-input">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Versão</label>
+              <input type="text" id="cfg-download-version" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Label da Versão</label>
+              <input type="text" id="cfg-download-versionLabel" class="form-input">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Data de Atualização</label>
+              <input type="text" id="cfg-download-date" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Compatibilidade</label>
+              <input type="text" id="cfg-download-compat" class="form-input">
+            </div>
+          </div>
+        </section>
+
+        <!-- INSTALAÇÃO -->
+        <section class="panel-section" id="section-instalacao">
+          <div class="section-header">
+            <h2>Como Instalar</h2>
+            <p>Instruções de instalação do APK</p>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tag da Seção</label>
+              <input type="text" id="cfg-htw-tag" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Subtítulo</label>
+              <input type="text" id="cfg-htw-subtitle" class="form-input">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Título (parte estática)</label>
+              <input type="text" id="cfg-htw-title" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Título (destacado)</label>
+              <input type="text" id="cfg-htw-titleHighlight" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Passos de Instalação</label>
+            <div id="htw-steps-list" class="editable-list"></div>
+            <button class="btn-add-item" onclick="addHtwStep()">+ Adicionar Passo</button>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="panel-section" id="section-faq">
+          <div class="section-header">
+            <h2>FAQ - Perguntas Frequentes</h2>
+            <p>Adicione, edite ou remova perguntas</p>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tag da Seção</label>
+              <input type="text" id="cfg-faq-tag" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Título (destacado)</label>
+              <input type="text" id="cfg-faq-titleHighlight" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Itens do FAQ</label>
+            <div id="faq-list" class="editable-list"></div>
+            <button class="btn-add-item" onclick="addFaqItem()">+ Adicionar Pergunta</button>
+          </div>
+        </section>
+
+        <!-- DEPOIMENTOS -->
+        <section class="panel-section" id="section-depoimentos">
+          <div class="section-header">
+            <h2>Depoimentos</h2>
+            <p>Depoimentos de usuários</p>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tag da Seção</label>
+              <input type="text" id="cfg-test-tag" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Subtítulo</label>
+              <input type="text" id="cfg-test-subtitle" class="form-input">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Título (parte estática)</label>
+              <input type="text" id="cfg-test-title" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Título (destacado)</label>
+              <input type="text" id="cfg-test-titleHighlight" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Depoimentos</label>
+            <div id="testimonials-list" class="editable-list"></div>
+            <button class="btn-add-item" onclick="addTestimonial()">+ Adicionar Depoimento</button>
+          </div>
+        </section>
+
+        <!-- RODAPÉ -->
+        <section class="panel-section" id="section-rodape">
+          <div class="section-header">
+            <h2>Rodapé</h2>
+            <p>Informações do rodapé do site</p>
+          </div>
+          <div class="form-group">
+            <label>Descrição do Rodapé</label>
+            <textarea id="cfg-footer-desc" class="form-textarea" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Título da Newsletter</label>
+            <input type="text" id="cfg-footer-newsletterTitle" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Descrição da Newsletter</label>
+            <input type="text" id="cfg-footer-newsletterDesc" class="form-input">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Placeholder do E-mail</label>
+              <input type="text" id="cfg-footer-newsletterPlaceholder" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>Texto do Botão</label>
+              <input type="text" id="cfg-footer-newsletterBtn" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Copyright</label>
+            <input type="text" id="cfg-footer-copyright" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Texto do Banner Android</label>
+            <input type="text" id="cfg-banner-text" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Texto Botão do Banner</label>
+            <input type="text" id="cfg-banner-ctaText" class="form-input">
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span id="toastMsg">Alterações salvas com sucesso!</span>
+  </div>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="db.js"></script>
+  <script src="site-config.js"></script>
+  <script src="painel.js"></script>
+</body>
+</html>
