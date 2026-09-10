@@ -46,6 +46,8 @@ function showPanel(email) {
   document.getElementById('panelWrapper').style.display = 'flex';
   document.getElementById('userEmail').textContent = email;
   loadAllFields();
+  refreshAnalytics();
+  setInterval(refreshAnalytics, 30000);
 }
 
 function setupLoginForm() {
@@ -668,4 +670,47 @@ function removeTestimonial(i) {
 function escapeHtml(str) {
   if (!str) return '';
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// =============================================
+// ANALYTICS
+// =============================================
+
+async function refreshAnalytics() {
+  const totalEl = document.getElementById('analyticsTotal');
+  const onlineEl = document.getElementById('analyticsOnline');
+  if (!totalEl || !onlineEl) return;
+  if (typeof supabaseClient === 'undefined' || !supabaseClient) {
+    totalEl.textContent = '—';
+    onlineEl.textContent = '—';
+    return;
+  }
+  try {
+    // Total via RPC ou count
+    let total = null;
+    let { data, error } = await supabaseClient.rpc('get_total_visits');
+    if (!error && typeof data === 'number') total = data;
+    else {
+      const { count } = await supabaseClient.from('site_visits').select('*', { count: 'exact', head: true });
+      if (typeof count === 'number') total = count;
+    }
+    totalEl.textContent = total !== null ? total.toLocaleString('pt-BR') : '0';
+  } catch (e) {
+    totalEl.textContent = '0';
+    console.warn('analytics total erro', e);
+  }
+  try {
+    let online = null;
+    let { data, error } = await supabaseClient.rpc('get_online_count');
+    if (!error && typeof data === 'number') online = data;
+    else {
+      const twoMinAgo = new Date(Date.now() - 2 * 60 * 1000).toISOString();
+      const { count } = await supabaseClient.from('online_presence').select('*', { count: 'exact', head: true }).gt('last_seen', twoMinAgo);
+      if (typeof count === 'number') online = count;
+    }
+    onlineEl.textContent = online !== null ? online.toString() : '0';
+  } catch (e) {
+    onlineEl.textContent = '0';
+    console.warn('analytics online erro', e);
+  }
 }
