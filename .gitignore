@@ -1,9 +1,8 @@
-# Dependências
+﻿# Dependências
 node_modules/
 
 # Vercel
 .vercel/
-.vercel
 
 # Logs
 *.log
@@ -16,7 +15,7 @@ yarn-error.log*
 Thumbs.db
 desktop.ini
 
-# Env (se usar no futuro)
+# Env
 .env
 .env.local
 .env.*.local
