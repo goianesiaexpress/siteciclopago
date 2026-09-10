@@ -672,6 +672,90 @@ function escapeHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+async function uploadApk() {
+  const input = document.getElementById('apkFile');
+  const status = document.getElementById('uploadStatus');
+  const btn = document.getElementById('btnUploadApk');
+  if (!input || !input.files || !input.files[0]) {
+    status.textContent = 'Selecione um arquivo .apk';
+    status.style.color = '#ef4444';
+    return;
+  }
+  const file = input.files[0];
+  if (!file.name.endsWith('.apk')) {
+    status.textContent = 'Arquivo deve ser .apk';
+    status.style.color = '#ef4444';
+    return;
+  }
+  if (file.size > 100 * 1024 * 1024) {
+    status.textContent = 'Arquivo muito grande (máx 100MB)';
+    status.style.color = '#ef4444';
+    return;
+  }
+  // Verifica SUPER_ADMIN
+  const isSuper = await DB.isSuperAdmin();
+  if (!isSuper) {
+    status.textContent = 'Apenas SUPER_ADMIN pode enviar APK';
+    status.style.color = '#ef4444';
+    return;
+  }
+  const sb = (typeof supabaseClient !== 'undefined' && supabaseClient) ? supabaseClient : (typeof supabase !== 'undefined' ? supabase : null);
+  if (!sb) {
+    status.textContent = 'Supabase não conectado';
+    status.style.color = '#ef4444';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  status.textContent = 'Enviando ' + (file.size/1024/1024).toFixed(1) + 'MB... aguarde';
+  status.style.color = '#f59e0b';
+  try {
+    const { error } = await sb.storage.from('apk').upload('ciclopago.apk', file, {
+      upsert: true,
+      contentType: 'application/vnd.android.package-archive',
+      cacheControl: '3600'
+    });
+    if (error) throw error;
+    const { data } = sb.storage.from('apk').getPublicUrl('ciclopago.apk');
+    const publicUrl = data.publicUrl;
+    // Atualiza campo do painel
+    const linkInput = document.getElementById('cfg-download-btnLink');
+    if (linkInput) linkInput.value = publicUrl;
+    // Atualiza config e salva
+    config.download = config.download || {};
+    config.download.btnLink = publicUrl;
+    // Opcional: atualiza versão/data automaticamente se vazio
+    const verInput = document.getElementById('cfg-download-version');
+    if (verInput && !verInput.value) {
+      const v = 'v' + new Date().toISOString().slice(0,10);
+      verInput.value = v;
+      config.download.version = v;
+    }
+    const dateInput = document.getElementById('cfg-download-date');
+    if (dateInput) {
+      const d = 'Atualizado em ' + new Date().toLocaleDateString('pt-BR', {month:'long', year:'numeric'});
+      dateInput.value = d;
+      config.download.date = d;
+    }
+    status.textContent = '✅ Enviado! Link: ' + publicUrl;
+    status.style.color = '#22c55e';
+    showToast('APK enviado! Clique em Salvar para atualizar o site.');
+    // Auto-salva após 1s
+    setTimeout(async () => {
+      await saveAll();
+      status.textContent += ' (site atualizado)';
+    }, 800);
+  } catch (e) {
+    console.error('uploadApk erro', e);
+    status.textContent = 'Erro: ' + (e.message || e);
+    status.style.color = '#ef4444';
+    showToast('Falha no upload: ' + (e.message || e), true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⬆️ Upload APK';
+  }
+}
+
 // =============================================
 // ANALYTICS
 // =============================================

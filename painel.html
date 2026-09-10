@@ -320,6 +320,16 @@
               <input type="text" id="cfg-download-btnLink" class="form-input">
             </div>
           </div>
+          <div style="background:rgba(52,208,88,0.08);border:1px solid rgba(52,208,88,0.2);border-radius:12px;padding:16px;margin-top:12px">
+            <label style="font-weight:600;display:block;margin-bottom:8px">📤 Atualizar APK (online)</label>
+            <p style="font-size:12px;opacity:0.7;margin-bottom:10px">Selecione o novo .apk e clique em Upload. Ele substituirá o arquivo atual e o link será atualizado automaticamente para todos os usuários.</p>
+            <input type="file" id="apkFile" accept=".apk,application/vnd.android.package-archive,application/octet-stream" class="form-input" style="margin-bottom:10px">
+            <div style="display:flex;gap:10px;align-items:center">
+              <button class="btn btn-primary" id="btnUploadApk" onclick="uploadApk()">⬆️ Upload APK</button>
+              <span id="uploadStatus" style="font-size:13px;opacity:0.8"></span>
+            </div>
+            <div style="margin-top:10px;font-size:12px;opacity:0.6">Armazenado em: <code>Supabase Storage → apk/ciclopago.apk</code> (público). Tamanho máximo 100MB.</div>
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label>Versão</label>

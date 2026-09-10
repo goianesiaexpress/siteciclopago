@@ -289,7 +289,21 @@
   if (c.androidBanner) {
     const bannerSpan = document.querySelector('#androidBanner span');
     if (bannerSpan) bannerSpan.textContent = c.androidBanner.text;
-    const bannerBtn = document.querySelector('#androidBanner .btn');
-    if (bannerBtn) bannerBtn.textContent = c.androidBanner.ctaText;
+    const bannerBtn = document.querySelector('#bannerDownloadBtn') || document.querySelector('#androidBanner .btn');
+    if (bannerBtn) {
+      bannerBtn.textContent = c.androidBanner.ctaText;
+      // Baixar Agora deve baixar direto o APK, não só scroll
+      const dlLink = (c.download && c.download.btnLink) ? c.download.btnLink : './downloads/ciclopago.apk';
+      bannerBtn.href = dlLink;
+      bannerBtn.setAttribute('download', '');
+    }
+  } else if (c.download) {
+    // Mesmo sem banner config, garante que o botão do banner baixa o APK
+    const bannerBtn = document.querySelector('#bannerDownloadBtn');
+    if (bannerBtn) {
+      const dlLink = c.download.btnLink || './downloads/ciclopago.apk';
+      bannerBtn.href = dlLink;
+      bannerBtn.setAttribute('download', '');
+    }
   }
 })();
