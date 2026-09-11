@@ -560,10 +560,6 @@ body {
   z-index: 1;
 }
 
-.aurora-front {
-  z-index: 5;
-}
-
 .aurora-ribbon {
   position: absolute;
   border-radius: 50%;
@@ -615,71 +611,6 @@ body {
   opacity: 0.7;
 }
 
-/* Front of phone ribbons */
-.aurora-r3 {
-  width: 310px;
-  height: 430px;
-  left: -155px;
-  top: -215px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(0, 255, 128, 0.0) 8%,
-    rgba(0, 255, 128, 0.12) 18%,
-    rgba(0, 220, 200, 0.18) 30%,
-    rgba(100, 0, 255, 0.1) 45%,
-    rgba(0, 255, 128, 0.15) 60%,
-    rgba(0, 200, 255, 0.08) 75%,
-    transparent 100%
-  );
-  filter: blur(18px);
-  transform: rotateX(75deg) rotateZ(120deg);
-  animation: auroraSpin3 7s linear infinite;
-  opacity: 0.6;
-}
-
-.aurora-r4 {
-  width: 270px;
-  height: 380px;
-  left: -135px;
-  top: -190px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(128, 0, 255, 0.0) 12%,
-    rgba(128, 0, 255, 0.1) 22%,
-    rgba(0, 255, 180, 0.15) 38%,
-    rgba(0, 180, 255, 0.12) 52%,
-    rgba(128, 0, 255, 0.08) 68%,
-    transparent 100%
-  );
-  filter: blur(14px);
-  transform: rotateX(75deg) rotateZ(200deg);
-  animation: auroraSpin4 9s linear infinite;
-  opacity: 0.55;
-}
-
-.aurora-r5 {
-  width: 290px;
-  height: 410px;
-  left: -145px;
-  top: -205px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(0, 255, 200, 0.0) 10%,
-    rgba(0, 255, 200, 0.1) 20%,
-    rgba(0, 200, 255, 0.15) 35%,
-    rgba(150, 0, 255, 0.1) 50%,
-    rgba(0, 255, 150, 0.12) 65%,
-    transparent 100%
-  );
-  filter: blur(16px);
-  transform: rotateX(75deg) rotateZ(300deg);
-  animation: auroraSpin5 11s linear infinite;
-  opacity: 0.5;
-}
-
 @keyframes auroraSpin1 {
   from { transform: rotateX(75deg) rotateZ(0deg); }
   to { transform: rotateX(75deg) rotateZ(360deg); }
@@ -687,18 +618,6 @@ body {
 @keyframes auroraSpin2 {
   from { transform: rotateX(75deg) rotateZ(60deg); }
   to { transform: rotateX(75deg) rotateZ(420deg); }
-}
-@keyframes auroraSpin3 {
-  from { transform: rotateX(75deg) rotateZ(120deg); }
-  to { transform: rotateX(75deg) rotateZ(480deg); }
-}
-@keyframes auroraSpin4 {
-  from { transform: rotateX(75deg) rotateZ(200deg); }
-  to { transform: rotateX(75deg) rotateZ(560deg); }
-}
-@keyframes auroraSpin5 {
-  from { transform: rotateX(75deg) rotateZ(300deg); }
-  to { transform: rotateX(75deg) rotateZ(660deg); }
 }
 
 /* Aurora canvas */
