@@ -8,9 +8,8 @@
   let w, h;
   
   function resize(){
-    const rect = wrapper.getBoundingClientRect();
     w = canvas.width = 400;
-    h = canvas.height = 500;
+    h = canvas.height = 300;
   }
   resize();
   
