@@ -728,12 +728,12 @@ async function uploadApk() {
       cacheControl: '3600'
     });
     if (error) throw error;
-    const { data } = sb.storage.from('apk').getPublicUrl('ciclopago.apk');
-    const publicUrl = data.publicUrl;
+    // Esconde rota Supabase: usa URL mesma origem que será reescrita no vercel.json para o Storage
+    const publicUrl = '/downloads/ciclopago.apk';
     // Atualiza campo do painel
     const linkInput = document.getElementById('cfg-download-btnLink');
     if (linkInput) linkInput.value = publicUrl;
-    // Atualiza config e salva
+    // Atualiza config e salva (link direto do banco agora é /downloads/ciclopago.apk, escondendo Supabase)
     config.download = config.download || {};
     config.download.btnLink = publicUrl;
     // Opcional: atualiza versão/data automaticamente se vazio
