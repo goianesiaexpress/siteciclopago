@@ -543,23 +543,114 @@ body {
   50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.12); }
 }
 
-/* ===== AURORA CANVAS BELOW PHONE ===== */
-.aurora-canvas {
+/* ===== SPIN AURA BELOW PHONE ===== */
+.spin-aura {
   position: absolute;
-  bottom: -120px;
+  bottom: -60px;
   left: 50%;
   transform: translateX(-50%);
-  width: 400px;
-  height: 300px;
+  width: 300px;
+  height: 100px;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  z-index: 1;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.8;
-  mix-blend-mode: screen;
+}
+
+.spin-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.spin-ring-1 {
+  width: 260px;
+  height: 260px;
+  margin-left: -130px;
+  margin-top: -130px;
+  border-color: rgba(52, 208, 88, 0.4);
+  box-shadow:
+    0 0 15px 3px rgba(52, 208, 88, 0.3),
+    0 0 40px 8px rgba(52, 208, 88, 0.15),
+    inset 0 0 15px 3px rgba(52, 208, 88, 0.1);
+  transform: rotateX(75deg);
+  animation: spinAura1 4s linear infinite;
+}
+
+.spin-ring-2 {
+  width: 220px;
+  height: 220px;
+  margin-left: -110px;
+  margin-top: -110px;
+  border-color: rgba(88, 166, 255, 0.35);
+  box-shadow:
+    0 0 12px 2px rgba(88, 166, 255, 0.3),
+    0 0 30px 6px rgba(88, 166, 255, 0.12),
+    inset 0 0 12px 2px rgba(88, 166, 255, 0.08);
+  transform: rotateX(75deg) rotateZ(45deg);
+  animation: spinAura2 3s linear infinite;
+}
+
+.spin-ring-3 {
+  width: 180px;
+  height: 180px;
+  margin-left: -90px;
+  margin-top: -90px;
+  border-color: rgba(0, 255, 200, 0.3);
+  box-shadow:
+    0 0 10px 2px rgba(0, 255, 200, 0.25),
+    0 0 25px 5px rgba(0, 255, 200, 0.1),
+    inset 0 0 10px 2px rgba(0, 255, 200, 0.06);
+  transform: rotateX(75deg) rotateZ(90deg);
+  animation: spinAura3 5s linear infinite;
+}
+
+.spin-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  margin-left: -100px;
+  margin-top: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(52, 208, 88, 0.2) 0%, rgba(52, 208, 88, 0.05) 40%, transparent 70%);
+  transform: rotateX(75deg);
+  filter: blur(10px);
+  animation: spinGlowPulse 3s ease-in-out infinite;
+}
+
+@keyframes spinAura1 {
+  from { transform: rotateX(75deg) rotateZ(0deg); }
+  to { transform: rotateX(75deg) rotateZ(360deg); }
+}
+@keyframes spinAura2 {
+  from { transform: rotateX(75deg) rotateZ(45deg); }
+  to { transform: rotateX(75deg) rotateZ(405deg); }
+}
+@keyframes spinAura3 {
+  from { transform: rotateX(75deg) rotateZ(90deg); }
+  to { transform: rotateX(75deg) rotateZ(450deg); }
+}
+@keyframes spinGlowPulse {
+  0%, 100% { opacity: 0.6; transform: rotateX(75deg) scale(1); }
+  50% { opacity: 1; transform: rotateX(75deg) scale(1.15); }
 }
 
 /* Hover boost */
-.phone-3d-wrapper:hover .aurora-canvas {
-  opacity: 1;
+.phone-3d-wrapper:hover .spin-ring {
+  border-color: rgba(52, 208, 88, 0.6);
+}
+.phone-3d-wrapper:hover .spin-ring-2 {
+  border-color: rgba(88, 166, 255, 0.55);
+}
+.phone-3d-wrapper:hover .spin-ring-3 {
+  border-color: rgba(0, 255, 200, 0.5);
+}
+.phone-3d-wrapper:hover .spin-glow {
+  opacity: 1.2;
 }
 
 .phone-3d-wrapper:hover .phone-real {
