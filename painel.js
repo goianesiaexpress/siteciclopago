@@ -710,20 +710,25 @@ async function uploadApk() {
   status.textContent = 'Enviando ' + (file.size/1024/1024).toFixed(1) + 'MB... aguarde';
   status.style.color = '#f59e0b';
   try {
-    // Envia para API serverless que valida SUPER_ADMIN e usa service_role no servidor
+    // Upload direto para Supabase Storage (sem serverless, sem limite de 4.5MB)
     const { data: { session } } = await sb.auth.getSession();
     if (!session) throw new Error('Sessão expirada, faça login novamente');
-    const res = await fetch('/api/upload-apk', {
+    const storageUrl = 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/apk/ciclopago.apk?upsert=true';
+    const res = await fetch(storageUrl, {
       method: 'POST',
       headers: {
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZG9ienlwaG9uY3pncGpybG5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDE2MTUsImV4cCI6MjA5NzIxNzYxNX0.pKh9OGfMF737BQjvlIQFF9LbxmtrgxmOFRrwL5fxqEk',
         'Authorization': `Bearer ${session.access_token}`,
-        'x-file-name': file.name,
-        'Content-Type': file.type || 'application/vnd.android.package-archive'
+        'Content-Type': file.type || 'application/vnd.android.package-archive',
+        'x-upsert': 'true'
       },
       body: file
     });
-    const json = await res.json();
-    if (!res.ok) throw new Error(json.error || 'Falha no upload');
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ message: res.statusText }));
+      throw new Error(err.message || 'Falha no upload');
+    }
+    const json = { url: '/downloads/ciclopago.apk' };
     // Esconde rota Supabase: usa URL mesma origem que será reescrita no vercel.json para o Storage
     const publicUrl = '/downloads/ciclopago.apk';
     // Atualiza campo do painel
