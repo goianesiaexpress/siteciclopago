@@ -160,8 +160,26 @@
       dlBtn.style.pointerEvents = 'auto';
       dlBtn.style.opacity = '1';
       dlBtn.removeAttribute('target');
-      // Chama exatamente o link do banco (sem fetch blob)
-      dlBtn.onclick = null;
+      // Força download direto (funciona mesmo cross-origin)
+      dlBtn.onclick = function(e) {
+        e.preventDefault();
+        const url = this.href;
+        // Tenta fetch+blob para garantir download com nome correto
+        fetch(url).then(r=>{
+          if(!r.ok) throw new Error('fetch '+r.status);
+          return r.blob();
+        }).then(b=>{
+          const blobUrl = URL.createObjectURL(b);
+          const a = document.createElement('a');
+          a.href = blobUrl; a.download = 'ciclopago.apk';
+          document.body.appendChild(a); a.click();
+          setTimeout(()=>{ URL.revokeObjectURL(blobUrl); a.remove(); }, 1500);
+        }).catch(()=>{
+          // Fallback: navega direto (Content-Disposition: attachment faz download)
+          window.location.href = url;
+        });
+        return false;
+      };
       const svg = dlBtn.querySelector('svg');
       const badge = dlBtn.querySelector('.btn-badge');
       dlBtn.textContent = '';
@@ -287,7 +305,7 @@
     if (nlBtn) nlBtn.textContent = c.footer.newsletterBtn;
   }
 
-  // Android Banner - chama exatamente o link do banco
+  // Android Banner - download direto
   if (c.androidBanner) {
     const bannerSpan = document.querySelector('#androidBanner span');
     if (bannerSpan) bannerSpan.textContent = c.androidBanner.text;
@@ -298,7 +316,18 @@
       bannerBtn.href = dlLink;
       bannerBtn.setAttribute('download', 'ciclopago.apk');
       bannerBtn.removeAttribute('target');
-      bannerBtn.onclick = null;
+      bannerBtn.onclick = function(e) {
+        e.preventDefault();
+        const url = this.href;
+        fetch(url).then(r=>r.blob()).then(b=>{
+          const blobUrl = URL.createObjectURL(b);
+          const a = document.createElement('a');
+          a.href = blobUrl; a.download = 'ciclopago.apk';
+          document.body.appendChild(a); a.click();
+          setTimeout(()=>{ URL.revokeObjectURL(blobUrl); a.remove(); }, 1500);
+        }).catch(()=>{ window.location.href = url; });
+        return false;
+      };
     }
   } else if (c.download) {
     const bannerBtn = document.querySelector('#bannerDownloadBtn');
@@ -306,7 +335,18 @@
       const dlLink = c.download.btnLink || './downloads/ciclopago.apk';
       bannerBtn.href = dlLink;
       bannerBtn.setAttribute('download', 'ciclopago.apk');
-      bannerBtn.onclick = null;
+      bannerBtn.onclick = function(e) {
+        e.preventDefault();
+        const url = this.href;
+        fetch(url).then(r=>r.blob()).then(b=>{
+          const blobUrl = URL.createObjectURL(b);
+          const a = document.createElement('a');
+          a.href = blobUrl; a.download = 'ciclopago.apk';
+          document.body.appendChild(a); a.click();
+          setTimeout(()=>{ URL.revokeObjectURL(blobUrl); a.remove(); }, 1500);
+        }).catch(()=>{ window.location.href = url; });
+        return false;
+      };
     }
   }
 })();
