@@ -379,16 +379,14 @@
     if (ebookLabel) ebookLabel.textContent = c.ebook.label || '';
     const ebookLink = document.querySelector('[data-ebook-link]');
     if (ebookLink && c.ebook.url) {
-      const dlUrl = c.ebook.url + (c.ebook.url.includes('?') ? '&' : '?') + 'download=CicloPago_Guia_do_Gestor.pdf';
-      ebookLink.href = dlUrl;
+      ebookLink.href = c.ebook.url;
     }
     // Hero ebook button
     const ebookBtnHero = document.querySelector('[data-ebook-btnText-hero]');
-    if (ebookBtnHero) ebookBtnHero.textContent = c.ebook.btnText || 'Baixar Ebook Grátis';
+    if (ebookBtnHero) ebookBtnHero.textContent = c.ebook.btnText || 'Baixar Ebook';
     const ebookLinkHero = document.querySelector('[data-ebook-link-hero]');
     if (ebookLinkHero && c.ebook.url) {
-      const dlUrlHero = c.ebook.url + (c.ebook.url.includes('?') ? '&' : '?') + 'download=CicloPago_Guia_do_Gestor.pdf';
-      ebookLinkHero.href = dlUrlHero;
+      ebookLinkHero.href = c.ebook.url;
     }
   }
 })();

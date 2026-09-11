@@ -848,7 +848,7 @@ async function uploadEbook() {
       throw new Error(err.message || 'Falha no upload');
     }
 
-    const publicUrl = 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/manuais/' + fileName;
+    const publicUrl = '/downloads/ebook.pdf';
 
     const urlInput = document.getElementById('cfg-ebook-url');
     if (urlInput) urlInput.value = publicUrl;
