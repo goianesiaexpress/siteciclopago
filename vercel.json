@@ -37,6 +37,6 @@
   "rewrites": [
     { "source": "/painel", "destination": "/painel.html" },
     { "source": "/downloads/ciclopago.apk", "destination": "https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/apk/ciclopago.apk?download=" },
-    { "source": "/downloads/ebook.pdf", "destination": "https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/manuais/Ciclo_Pago_Guia_de_Gestao_Com_Logos.pdf?download=CicloPago_Guia_do_Gestor.pdf" }
+    { "source": "/downloads/ebook.pdf", "destination": "/api/download-ebook" }
   ]
 }
