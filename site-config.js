@@ -9,18 +9,18 @@ const SITE_CONFIG_DEFAULTS = {
     description: "Gerencie seus consórcios com inteligência. Acompanhe pagamentos, grupos, parcelas e progresso financeiro com segurança total.",
   },
   hero: {
-    badge: "Novo v1.0.4 disponível",
+    badge: "Novo v1.0.4 disponível • Apenas Android",
     titlePrefix: "A Gestão dos seus Consórcios na",
     titleHighlight: "Palma da sua Mão",
-    subtitle: "Acompanhe pagamentos, grupos, parcelas e progresso financeiro com total segurança e criptografia de ponta.",
+    subtitle: "Acompanhe pagamentos, grupos, parcelas e progresso financeiro com total segurança e criptografia de ponta. Exclusivo para dispositivos Android.",
     ctaText: "Baixar APK Grátis",
     ctaLink: "#download",
     secondaryText: "Ver Funcionalidades",
     secondaryLink: "#recursos",
     badges: [
-      { text: "Android 8.0+" },
-      { text: "100% Seguro" },
-      { text: "Criptografia de Dados" }
+      { text: "Apenas Android" },
+      { text: "Android 11+" },
+      { text: "100% Seguro" }
     ]
   },
   metrics: {
@@ -57,13 +57,13 @@ const SITE_CONFIG_DEFAULTS = {
   },
   download: {
     title: "Pronto para Organizar seus Consórcios?",
-    subtitle: "Baixe o CicloPago agora e comece a gerenciar seus consórcios com inteligência.",
+    subtitle: "Baixe o CicloPago agora e comece a gerenciar seus consórcios com inteligência. Disponível exclusivamente para Android.",
     btnText: "Baixar CicloPago.apk",
     btnLink: "./downloads/ciclopago.apk",
     version: "v1.0.4",
     versionLabel: "Versão Atual: 1.0.4",
     date: "Atualizado em Setembro de 2026",
-    compat: "Compatível com Android"
+    compat: "Apenas Android • Não disponível para iOS"
   },
   howToInstall: {
     tag: "Instalação",
@@ -84,7 +84,8 @@ const SITE_CONFIG_DEFAULTS = {
       { question: "Por que baixar o APK direto do site?", answer: "A instalação direta via APK garante atualizações rápidas, sem depender de lojas de aplicativos, com total controle sobre as versões e sem intermediários. Você sempre terá a versão mais recente do CicloPago." },
       { question: "O aplicativo é seguro?", answer: "Sim! O CicloPago utiliza autenticação segura e banco de dados criptografado, garantindo que seus dados estejam sempre protegidos com as melhores tecnologias de segurança." },
       { question: "Preciso de internet para usar?", answer: "O aplicativo sincroniza seus dados com a nuvem, garantindo que suas informações estejam sempre seguras e acessíveis. Para a melhor experiência, recomendamos conexão com a internet durante o uso." },
-      { question: "Quais são os requisitos mínimos do sistema?", answer: "O CicloPago é compatível com dispositivos Android 8.0 (Oreo) ou superior. Recomendamos pelo menos 2 GB de RAM para uma experiência fluida." }
+      { question: "Quais são os requisitos mínimos do sistema?", answer: "O CicloPago é exclusivo para Android 8.0 (Oreo) ou superior. Recomendamos pelo menos 2 GB de RAM. Não há versão para iOS — apenas dispositivos Android são compatíveis." },
+      { question: "Funciona no iPhone (iOS)?", answer: "Não. O CicloPago é desenvolvido exclusivamente para o sistema Android. Usuários de iPhone não conseguem instalar o APK." }
     ]
   },
   testimonials: {
