@@ -546,7 +546,7 @@ body {
 /* ===== SPIN AURA BELOW PHONE ===== */
 .spin-aura {
   position: absolute;
-  bottom: -60px;
+  bottom: -40px;
   left: 50%;
   transform: translateX(-50%);
   width: 300px;
@@ -590,7 +590,7 @@ body {
     0 0 30px 6px rgba(88, 166, 255, 0.12),
     inset 0 0 12px 2px rgba(88, 166, 255, 0.08);
   transform: rotateX(75deg) rotateZ(45deg);
-  animation: spinAura2 3s linear infinite;
+  animation: spinAura2Rev 3.5s linear infinite;
 }
 
 .spin-ring-3 {
@@ -605,6 +605,53 @@ body {
     inset 0 0 10px 2px rgba(0, 255, 200, 0.06);
   transform: rotateX(75deg) rotateZ(90deg);
   animation: spinAura3 5s linear infinite;
+}
+
+/* Pulsing dot on each ring */
+.spin-dot {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  margin-left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.spin-ring-1 .spin-dot {
+  background: radial-gradient(circle, #fff 0%, #34d058 50%, transparent 70%);
+  box-shadow:
+    0 0 8px 3px rgba(52, 208, 88, 0.8),
+    0 0 20px 6px rgba(52, 208, 88, 0.5),
+    0 0 40px 12px rgba(52, 208, 88, 0.2);
+  animation: dotPulse1 2s ease-in-out infinite;
+}
+
+.spin-ring-2 .spin-dot {
+  width: 8px;
+  height: 8px;
+  top: -4px;
+  margin-left: -4px;
+  background: radial-gradient(circle, #fff 0%, #58a6ff 50%, transparent 70%);
+  box-shadow:
+    0 0 8px 3px rgba(88, 166, 255, 0.8),
+    0 0 20px 6px rgba(88, 166, 255, 0.5),
+    0 0 40px 12px rgba(88, 166, 255, 0.2);
+  animation: dotPulse2 1.5s ease-in-out infinite;
+}
+
+.spin-ring-3 .spin-dot {
+  width: 7px;
+  height: 7px;
+  top: -3.5px;
+  margin-left: -3.5px;
+  background: radial-gradient(circle, #fff 0%, #00ffc8 50%, transparent 70%);
+  box-shadow:
+    0 0 8px 3px rgba(0, 255, 200, 0.8),
+    0 0 20px 6px rgba(0, 255, 200, 0.5),
+    0 0 40px 12px rgba(0, 255, 200, 0.2);
+  animation: dotPulse3 2.5s ease-in-out infinite;
 }
 
 .spin-glow {
@@ -626,17 +673,36 @@ body {
   from { transform: rotateX(75deg) rotateZ(0deg); }
   to { transform: rotateX(75deg) rotateZ(360deg); }
 }
-@keyframes spinAura2 {
+@keyframes spinAura2Rev {
   from { transform: rotateX(75deg) rotateZ(45deg); }
-  to { transform: rotateX(75deg) rotateZ(405deg); }
+  to { transform: rotateX(75deg) rotateZ(-315deg); }
 }
 @keyframes spinAura3 {
   from { transform: rotateX(75deg) rotateZ(90deg); }
   to { transform: rotateX(75deg) rotateZ(450deg); }
 }
+
+@keyframes dotPulse1 {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.6); opacity: 1; }
+}
+@keyframes dotPulse2 {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+@keyframes dotPulse3 {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
 @keyframes spinGlowPulse {
   0%, 100% { opacity: 0.6; transform: rotateX(75deg) scale(1); }
   50% { opacity: 1; transform: rotateX(75deg) scale(1.15); }
+}
+
+/* Phone sits inside portal */
+.phone-3d-wrapper {
+  padding-bottom: 20px;
 }
 
 /* Hover boost */
