@@ -397,9 +397,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ======= SMOOTH SCROLL FOR ANCHOR LINKS =======
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
+      const href = this.getAttribute('href');
+      if (!href || href === '#' || href.length < 2) return;
+      let target = null;
+      try { target = document.querySelector(href); } catch (err) { return; }
       if (target) {
+        e.preventDefault();
         const headerHeight = header ? header.offsetHeight : 0;
         const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
         window.scrollTo({ top: targetPosition, behavior: 'smooth' });
