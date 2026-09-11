@@ -729,27 +729,24 @@ async function uploadApk() {
       throw new Error(err.message || 'Falha no upload');
     }
     const json = { url: '/downloads/ciclopago.apk' };
-    // Esconde rota Supabase: usa URL mesma origem que será reescrita no vercel.json para o Storage
-    const publicUrl = '/downloads/ciclopago.apk';
+    // Timestamp no link para bust cache do browser e CDN
+    const ts = Date.now();
+    const publicUrl = '/downloads/ciclopago.apk?t=' + ts;
     // Atualiza campo do painel
     const linkInput = document.getElementById('cfg-download-btnLink');
     if (linkInput) linkInput.value = publicUrl;
-    // Atualiza config e salva (link direto do banco agora é /downloads/ciclopago.apk, escondendo Supabase)
+    // Atualiza config e salva
     config.download = config.download || {};
     config.download.btnLink = publicUrl;
-    // Opcional: atualiza versão/data automaticamente se vazio
+    // Sempre atualiza versão/data no upload para bust cache
     const verInput = document.getElementById('cfg-download-version');
-    if (verInput && !verInput.value) {
-      const v = 'v' + new Date().toISOString().slice(0,10);
-      verInput.value = v;
-      config.download.version = v;
-    }
+    const v = 'v' + new Date().toISOString().slice(0,10);
+    if (verInput) verInput.value = v;
+    config.download.version = v;
     const dateInput = document.getElementById('cfg-download-date');
-    if (dateInput) {
-      const d = 'Atualizado em ' + new Date().toLocaleDateString('pt-BR', {month:'long', year:'numeric'});
-      dateInput.value = d;
-      config.download.date = d;
-    }
+    const d = 'Atualizado em ' + new Date().toLocaleDateString('pt-BR', {month:'long', year:'numeric'});
+    if (dateInput) dateInput.value = d;
+    config.download.date = d;
     status.textContent = '✅ Enviado! Link: ' + publicUrl;
     status.style.color = '#22c55e';
     showToast('APK enviado! Clique em Salvar para atualizar o site.');

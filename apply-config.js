@@ -154,7 +154,9 @@
 
     const dlBtn = document.querySelector('.download-btn');
     if (dlBtn) {
-      const link = c.download.btnLink && c.download.btnLink.trim() ? c.download.btnLink : './downloads/ciclopago.apk';
+      const rawLink = c.download.btnLink && c.download.btnLink.trim() ? c.download.btnLink : './downloads/ciclopago.apk';
+      const cacheV = c.download.version || ('v' + new Date().toISOString().slice(0,10));
+      const link = rawLink + (rawLink.includes('?') ? '&' : '?') + 'v=' + encodeURIComponent(cacheV);
       dlBtn.href = link;
       dlBtn.setAttribute('download', 'ciclopago.apk');
       dlBtn.style.pointerEvents = 'auto';
@@ -320,7 +322,9 @@
     const bannerBtn = document.querySelector('#bannerDownloadBtn') || document.querySelector('#androidBanner .btn');
     if (bannerBtn) {
       bannerBtn.textContent = c.androidBanner.ctaText;
-      const dlLink = (c.download && c.download.btnLink) ? c.download.btnLink : './downloads/ciclopago.apk';
+      const rawLink2 = (c.download && c.download.btnLink) ? c.download.btnLink : './downloads/ciclopago.apk';
+      const cacheV2 = c.download.version || ('v' + new Date().toISOString().slice(0,10));
+      const dlLink = rawLink2 + (rawLink2.includes('?') ? '&' : '?') + 'v=' + encodeURIComponent(cacheV2);
       bannerBtn.href = dlLink;
       bannerBtn.setAttribute('download', 'ciclopago.apk');
       bannerBtn.removeAttribute('target');
@@ -340,7 +344,9 @@
   } else if (c.download) {
     const bannerBtn = document.querySelector('#bannerDownloadBtn');
     if (bannerBtn) {
-      const dlLink = c.download.btnLink || './downloads/ciclopago.apk';
+      const rawLink3 = c.download.btnLink || './downloads/ciclopago.apk';
+      const cacheV3 = c.download.version || ('v' + new Date().toISOString().slice(0,10));
+      const dlLink = rawLink3 + (rawLink3.includes('?') ? '&' : '?') + 'v=' + encodeURIComponent(cacheV3);
       bannerBtn.href = dlLink;
       bannerBtn.setAttribute('download', 'ciclopago.apk');
       bannerBtn.onclick = function(e) {
