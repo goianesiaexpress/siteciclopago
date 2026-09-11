@@ -115,7 +115,7 @@ INSERT INTO site_config (section, data) VALUES
   "title": "Pronto para Organizar seus Consórcios?",
   "subtitle": "Baixe o CicloPago agora e comece a gerenciar seus consórcios com inteligência.",
   "btnText": "Baixar CicloPago.apk",
-  "btnLink": "./downloads/ciclopago.apk",
+  "btnLink": "https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/apk/ciclopago.apk?download=",
   "version": "v1.0.4",
   "versionLabel": "Versão Atual: 1.0.4",
   "date": "Atualizado em Setembro de 2026",

@@ -728,10 +728,9 @@ async function uploadApk() {
       const err = await res.json().catch(() => ({ message: res.statusText }));
       throw new Error(err.message || 'Falha no upload');
     }
-    const json = { url: '/downloads/ciclopago.apk' };
-    // Timestamp no link para bust cache do browser e CDN
-    const ts = Date.now();
-    const publicUrl = '/downloads/ciclopago.apk?t=' + ts;
+    const json = { url: 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/apk/ciclopago.apk?download=' };
+    // URL direta do Supabase (sem cache do Vercel)
+    const publicUrl = 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/apk/ciclopago.apk?download=';
     // Atualiza campo do painel
     const linkInput = document.getElementById('cfg-download-btnLink');
     if (linkInput) linkInput.value = publicUrl;

@@ -154,7 +154,7 @@
 
     const dlBtn = document.querySelector('.download-btn');
     if (dlBtn) {
-      const rawLink = c.download.btnLink && c.download.btnLink.trim() ? c.download.btnLink : './downloads/ciclopago.apk';
+      const rawLink = c.download.btnLink && c.download.btnLink.trim() ? c.download.btnLink : 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/apk/ciclopago.apk?download=';
       const cacheV = c.download.version || ('v' + new Date().toISOString().slice(0,10));
       const link = rawLink + (rawLink.includes('?') ? '&' : '?') + 'v=' + encodeURIComponent(cacheV);
       dlBtn.href = link;
@@ -322,7 +322,7 @@
     const bannerBtn = document.querySelector('#bannerDownloadBtn') || document.querySelector('#androidBanner .btn');
     if (bannerBtn) {
       bannerBtn.textContent = c.androidBanner.ctaText;
-      const rawLink2 = (c.download && c.download.btnLink) ? c.download.btnLink : './downloads/ciclopago.apk';
+      const rawLink2 = (c.download && c.download.btnLink) ? c.download.btnLink : 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/apk/ciclopago.apk?download=';
       const cacheV2 = c.download.version || ('v' + new Date().toISOString().slice(0,10));
       const dlLink = rawLink2 + (rawLink2.includes('?') ? '&' : '?') + 'v=' + encodeURIComponent(cacheV2);
       bannerBtn.href = dlLink;
@@ -344,7 +344,7 @@
   } else if (c.download) {
     const bannerBtn = document.querySelector('#bannerDownloadBtn');
     if (bannerBtn) {
-      const rawLink3 = c.download.btnLink || './downloads/ciclopago.apk';
+      const rawLink3 = c.download.btnLink || 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/apk/ciclopago.apk?download=';
       const cacheV3 = c.download.version || ('v' + new Date().toISOString().slice(0,10));
       const dlLink = rawLink3 + (rawLink3.includes('?') ? '&' : '?') + 'v=' + encodeURIComponent(cacheV3);
       bannerBtn.href = dlLink;
