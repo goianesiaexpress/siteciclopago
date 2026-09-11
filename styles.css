@@ -543,6 +543,244 @@ body {
   50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.12); }
 }
 
+/* ===== ENERGY 3D ORBIT EFFECT ===== */
+.energy-orbits {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.energy-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  margin-left: -130px;
+  margin-top: -130px;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.energy-orbit-1 {
+  border: 2px solid transparent;
+  transform: rotateX(70deg) rotateZ(0deg);
+  animation: orbitSpin1 3s linear infinite;
+}
+.energy-orbit-1 .energy-particle {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  margin-left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #34d058 0%, #2ea043 40%, transparent 70%);
+  box-shadow:
+    0 0 12px 4px rgba(52, 208, 88, 0.8),
+    0 0 30px 8px rgba(52, 208, 88, 0.5),
+    0 0 60px 16px rgba(52, 208, 88, 0.2);
+}
+.energy-orbit-1 .energy-particle-tail {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  margin-left: -3px;
+  width: 6px;
+  height: 40px;
+  border-radius: 3px;
+  background: linear-gradient(to top, transparent, rgba(52, 208, 88, 0.6), #34d058);
+  filter: blur(2px);
+  transform-origin: bottom center;
+  animation: tailFlicker1 3s linear infinite;
+}
+
+.energy-orbit-2 {
+  border: 1.5px solid transparent;
+  transform: rotateX(70deg) rotateZ(120deg);
+  animation: orbitSpin2 4s linear infinite;
+  width: 240px;
+  height: 240px;
+  margin-left: -120px;
+  margin-top: -120px;
+}
+.energy-orbit-2 .energy-particle {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  margin-left: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #79c0ff 0%, #58a6ff 40%, transparent 70%);
+  box-shadow:
+    0 0 10px 3px rgba(88, 166, 255, 0.8),
+    0 0 25px 6px rgba(88, 166, 255, 0.4),
+    0 0 50px 12px rgba(88, 166, 255, 0.15);
+}
+.energy-orbit-2 .energy-particle-tail {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  margin-left: -2px;
+  width: 4px;
+  height: 30px;
+  border-radius: 2px;
+  background: linear-gradient(to top, transparent, rgba(88, 166, 255, 0.5), #79c0ff);
+  filter: blur(1.5px);
+  transform-origin: bottom center;
+  animation: tailFlicker2 4s linear infinite;
+}
+
+.energy-orbit-3 {
+  border: 1px solid transparent;
+  transform: rotateX(70deg) rotateZ(240deg);
+  animation: orbitSpin3 2.5s linear infinite;
+  width: 280px;
+  height: 280px;
+  margin-left: -140px;
+  margin-top: -140px;
+}
+.energy-orbit-3 .energy-particle {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  margin-left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #56d364 0%, #3fb950 40%, transparent 70%);
+  box-shadow:
+    0 0 8px 2px rgba(63, 185, 80, 0.8),
+    0 0 20px 5px rgba(63, 185, 80, 0.4),
+    0 0 40px 10px rgba(63, 185, 80, 0.15);
+}
+.energy-orbit-3 .energy-particle-tail {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  margin-left: -1.5px;
+  width: 3px;
+  height: 22px;
+  border-radius: 1.5px;
+  background: linear-gradient(to top, transparent, rgba(63, 185, 80, 0.4), #56d364);
+  filter: blur(1px);
+  transform-origin: bottom center;
+  animation: tailFlicker3 2.5s linear infinite;
+}
+
+@keyframes orbitSpin1 {
+  from { transform: rotateX(70deg) rotateZ(0deg); }
+  to { transform: rotateX(70deg) rotateZ(360deg); }
+}
+@keyframes orbitSpin2 {
+  from { transform: rotateX(70deg) rotateZ(120deg); }
+  to { transform: rotateX(70deg) rotateZ(480deg); }
+}
+@keyframes orbitSpin3 {
+  from { transform: rotateX(70deg) rotateZ(240deg); }
+  to { transform: rotateX(70deg) rotateZ(600deg); }
+}
+
+@keyframes tailFlicker1 {
+  0%, 100% { opacity: 0.7; transform: scaleY(1); }
+  25% { opacity: 1; transform: scaleY(1.3); }
+  50% { opacity: 0.5; transform: scaleY(0.8); }
+  75% { opacity: 0.9; transform: scaleY(1.1); }
+}
+@keyframes tailFlicker2 {
+  0%, 100% { opacity: 0.6; transform: scaleY(1); }
+  33% { opacity: 0.9; transform: scaleY(1.2); }
+  66% { opacity: 0.4; transform: scaleY(0.7); }
+}
+@keyframes tailFlicker3 {
+  0%, 100% { opacity: 0.5; transform: scaleY(0.9); }
+  50% { opacity: 0.8; transform: scaleY(1.15); }
+}
+
+/* Energy rings - vertical ellipses */
+.energy-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 260px;
+  margin-left: -110px;
+  margin-top: -130px;
+  border: 1.5px solid rgba(52, 208, 88, 0.15);
+  border-radius: 50%;
+  transform: rotateY(0deg);
+  animation: ringPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+.energy-ring-2 {
+  width: 250px;
+  height: 290px;
+  margin-left: -125px;
+  margin-top: -145px;
+  border-color: rgba(88, 166, 255, 0.1);
+  transform: rotateY(60deg);
+  animation: ringPulse2 4s ease-in-out infinite 0.5s;
+}
+
+@keyframes ringPulse {
+  0%, 100% { opacity: 0.3; transform: rotateY(0deg) scale(1); }
+  50% { opacity: 0.7; transform: rotateY(0deg) scale(1.05); }
+}
+@keyframes ringPulse2 {
+  0%, 100% { opacity: 0.2; transform: rotateY(60deg) scale(1); }
+  50% { opacity: 0.5; transform: rotateY(60deg) scale(1.08); }
+}
+
+/* Core glow */
+.energy-glow-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(52, 208, 88, 0.08) 0%, rgba(52, 208, 88, 0.03) 40%, transparent 70%);
+  filter: blur(20px);
+  z-index: 1;
+  pointer-events: none;
+  animation: coreGlow 4s ease-in-out infinite;
+}
+
+@keyframes coreGlow {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scaleX(0.9); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scaleX(1.1); }
+}
+
+/* Hover enhancement */
+.phone-3d-wrapper:hover .energy-orbit-1 .energy-particle {
+  box-shadow:
+    0 0 16px 6px rgba(52, 208, 88, 0.9),
+    0 0 40px 12px rgba(52, 208, 88, 0.6),
+    0 0 80px 24px rgba(52, 208, 88, 0.3);
+}
+.phone-3d-wrapper:hover .energy-orbit-2 .energy-particle {
+  box-shadow:
+    0 0 14px 5px rgba(88, 166, 255, 0.9),
+    0 0 35px 10px rgba(88, 166, 255, 0.5),
+    0 0 70px 20px rgba(88, 166, 255, 0.25);
+}
+.phone-3d-wrapper:hover .energy-glow-core {
+  opacity: 1.5;
+}
+.phone-3d-wrapper:hover .energy-ring {
+  border-color: rgba(52, 208, 88, 0.3);
+  animation-duration: 2s;
+}
+
 .phone-3d-wrapper:hover .phone-real {
   box-shadow:
     inset 0 1px 0 0 rgba(255,255,255,0.18),
