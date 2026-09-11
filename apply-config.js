@@ -222,7 +222,15 @@
           const p = htwSteps[i].querySelector('p');
           if (num) num.textContent = s.number;
           if (h3) h3.textContent = s.title;
-          if (p) p.innerHTML = s.desc;
+          if (p) {
+            // Sanitiza: só permite <strong>, <b>, <em>, <br>
+            const sanitized = String(s.desc).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+              .replace(/&lt;strong&gt;/g,'<strong>').replace(/&lt;\/strong&gt;/g,'</strong>')
+              .replace(/&lt;b&gt;/g,'<b>').replace(/&lt;\/b&gt;/g,'</b>')
+              .replace(/&lt;em&gt;/g,'<em>').replace(/&lt;\/em&gt;/g,'</em>')
+              .replace(/&lt;br&gt;/g,'<br>').replace(/&lt;br\/&gt;/g,'<br>');
+            p.innerHTML = sanitized;
+          }
         }
       });
     }

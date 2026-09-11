@@ -699,19 +699,7 @@ async function uploadApk() {
     status.style.color = '#ef4444';
     return;
   }
-  // Usa service_role para bypass RLS do storage (temporário, até RLS correto)
-  const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZG9ienlwaG9uY3pncGpybG5jIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTY0MTYxNSwiZXhwIjoyMDk3MjE3NjE1fQ.-btPatjviU4HlCXJcbNmsLrKniwitBqvqd-RNDnuWII';
   let sb = (typeof supabaseClient !== 'undefined' && supabaseClient) ? supabaseClient : (typeof supabase !== 'undefined' ? supabase : null);
-  // Cria client com service_role para storage (bypass RLS) - usa supabaseLib preservada
-  let storageClient = sb;
-  try {
-    const lib = (typeof window.supabaseLib !== 'undefined' && window.supabaseLib) ? window.supabaseLib : (window.supabase && window.supabase.createClient ? window.supabase : null);
-    if (lib && lib.createClient) {
-      storageClient = lib.createClient(SUPABASE_URL, SERVICE_KEY);
-    } else if (window.supabaseLib && window.supabaseLib.createClient) {
-      storageClient = window.supabaseLib.createClient(SUPABASE_URL, SERVICE_KEY);
-    }
-  } catch (e) { storageClient = sb; }
   if (!sb) {
     status.textContent = 'Supabase não conectado';
     status.style.color = '#ef4444';
@@ -722,12 +710,20 @@ async function uploadApk() {
   status.textContent = 'Enviando ' + (file.size/1024/1024).toFixed(1) + 'MB... aguarde';
   status.style.color = '#f59e0b';
   try {
-    const { error } = await storageClient.storage.from('apk').upload('ciclopago.apk', file, {
-      upsert: true,
-      contentType: 'application/vnd.android.package-archive',
-      cacheControl: '3600'
+    // Envia para API serverless que valida SUPER_ADMIN e usa service_role no servidor
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) throw new Error('Sessão expirada, faça login novamente');
+    const res = await fetch('/api/upload-apk', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+        'x-file-name': file.name,
+        'Content-Type': file.type || 'application/vnd.android.package-archive'
+      },
+      body: file
     });
-    if (error) throw error;
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || 'Falha no upload');
     // Esconde rota Supabase: usa URL mesma origem que será reescrita no vercel.json para o Storage
     const publicUrl = '/downloads/ciclopago.apk';
     // Atualiza campo do painel
