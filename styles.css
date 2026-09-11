@@ -546,7 +546,7 @@ body {
 /* ===== SPIN AURA BELOW PHONE ===== */
 .spin-aura {
   position: absolute;
-  bottom: -20px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
   width: 300px;
@@ -1584,7 +1584,7 @@ body {
 
   .spin-aura {
     transform: translateX(-50%) scale(0.75);
-    bottom: -30px;
+    bottom: 5px;
   }
 
   .spin-ring-1 .spin-dot {
