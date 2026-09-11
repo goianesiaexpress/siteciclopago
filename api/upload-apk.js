@@ -43,20 +43,38 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: 'Apenas SUPER_ADMIN pode enviar APK' });
   }
 
-  // Lê o body como buffer (multipart)
+  // Lê o body como buffer
   const chunks = [];
   for await (const chunk of req) chunks.push(chunk);
   const buffer = Buffer.concat(chunks);
   
-  // Tenta extrair boundary e arquivo do multipart
   const contentType = req.headers['content-type'] || '';
-  if (!contentType.includes('multipart/form-data')) {
-    return res.status(400).json({ error: 'Envie como multipart/form-data com campo file' });
+  // Aceita tanto multipart/form-data quanto raw com x-file-name
+  let fileName = req.headers['x-file-name'] || 'ciclopago.apk';
+  let fileBuffer = buffer;
+  
+  // Se for multipart, extrai o arquivo (fallback simples)
+  if (contentType.includes('multipart/form-data')) {
+    // Tenta extrair via boundary simples
+    const boundary = contentType.split('boundary=')[1];
+    if (boundary) {
+      const parts = buffer.toString('binary').split('--' + boundary);
+      for (const part of parts) {
+        if (part.includes('filename="')) {
+          const nameMatch = part.match(/filename="([^"]+)"/);
+          if (nameMatch) fileName = nameMatch[1];
+          const headerEnd = part.indexOf('\r\n\r\n');
+          if (headerEnd !== -1) {
+            const contentStart = headerEnd + 4;
+            const contentEnd = part.lastIndexOf('\r\n');
+            fileBuffer = Buffer.from(part.slice(contentStart, contentEnd), 'binary');
+            break;
+          }
+        }
+      }
+    }
+    if (!fileBuffer || fileBuffer.length === 0) fileBuffer = buffer;
   }
-
-  // Usa busboy-like parsing simples via supabase storage diretamente com buffer
-  // Para simplificar, espera que o frontend envie o arquivo raw com header x-file-name
-  const fileName = req.headers['x-file-name'] || 'ciclopago.apk';
   if (!fileName.endsWith('.apk')) {
     return res.status(400).json({ error: 'Arquivo deve ser .apk' });
   }
