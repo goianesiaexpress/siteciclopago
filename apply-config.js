@@ -363,4 +363,24 @@
       };
     }
   }
+
+  // Ebook
+  if (c.ebook) {
+    const ebookTitle = document.querySelector('[data-ebook-title]');
+    if (ebookTitle) {
+      ebookTitle.textContent = '';
+      ebookTitle.textContent = c.ebook.title || 'Guia do Gestor CicloPago';
+    }
+    const ebookDesc = document.querySelector('[data-ebook-desc]');
+    if (ebookDesc) ebookDesc.textContent = c.ebook.desc || '';
+    const ebookBtn = document.querySelector('[data-ebook-btnText]');
+    if (ebookBtn) ebookBtn.textContent = c.ebook.btnText || 'Baixar Ebook';
+    const ebookLabel = document.querySelector('[data-ebook-label]');
+    if (ebookLabel) ebookLabel.textContent = c.ebook.label || '';
+    const ebookLink = document.querySelector('[data-ebook-link]');
+    if (ebookLink && c.ebook.url) {
+      const dlUrl = c.ebook.url + (c.ebook.url.includes('?') ? '&' : '?') + 'download=CicloPago_Guia_do_Gestor.pdf';
+      ebookLink.href = dlUrl;
+    }
+  }
 })();

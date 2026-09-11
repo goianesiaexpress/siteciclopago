@@ -228,6 +228,12 @@ async function loadAllFields() {
   setText('cfg-banner-text', config.androidBanner?.text);
   setText('cfg-banner-ctaText', config.androidBanner?.ctaText);
 
+  setText('cfg-ebook-title', config.ebook?.title);
+  setText('cfg-ebook-desc', config.ebook?.desc);
+  setText('cfg-ebook-btnText', config.ebook?.btnText);
+  setText('cfg-ebook-label', config.ebook?.label);
+  setText('cfg-ebook-url', config.ebook?.url);
+
   renderHeroBadges();
   renderMetrics();
   renderFeatures();
@@ -336,6 +342,14 @@ async function saveAll() {
   config.androidBanner = {
     text: getText('cfg-banner-text'),
     ctaText: getText('cfg-banner-ctaText')
+  };
+
+  config.ebook = {
+    title: getText('cfg-ebook-title'),
+    desc: getText('cfg-ebook-desc'),
+    btnText: getText('cfg-ebook-btnText'),
+    label: getText('cfg-ebook-label'),
+    url: getText('cfg-ebook-url')
   };
 
   // Verifica SUPER_ADMIN antes de salvar
@@ -762,6 +776,102 @@ async function uploadApk() {
   } finally {
     btn.disabled = false;
     btn.textContent = '⬆️ Upload APK';
+  }
+}
+
+// =============================================
+// UPLOAD EBOOK
+// =============================================
+
+async function uploadEbook() {
+  const input = document.getElementById('ebookFile');
+  const btn = document.getElementById('btnUploadEbook');
+  const status = document.getElementById('ebookUploadStatus');
+  if (!input || !btn || !status) return;
+
+  if (!input.files || !input.files.length) {
+    status.textContent = 'Selecione um arquivo PDF';
+    status.style.color = '#ef4444';
+    return;
+  }
+  const file = input.files[0];
+  if (!file.name.endsWith('.pdf')) {
+    status.textContent = 'Arquivo deve ser .pdf';
+    status.style.color = '#ef4444';
+    return;
+  }
+  if (file.size > 50 * 1024 * 1024) {
+    status.textContent = 'Arquivo muito grande (máx 50MB)';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  const isSuper = await DB.isSuperAdmin();
+  if (!isSuper) {
+    status.textContent = 'Apenas SUPER_ADMIN pode enviar ebook';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  let sb = (typeof supabaseClient !== 'undefined' && supabaseClient) ? supabaseClient : (typeof supabase !== 'undefined' ? supabase : null);
+  if (!sb) {
+    status.textContent = 'Supabase não conectado';
+    status.style.color = '#ef4444';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  status.textContent = 'Enviando ' + (file.size/1024/1024).toFixed(1) + 'MB... aguarde';
+  status.style.color = '#f59e0b';
+
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) throw new Error('Sessão expirada, faça login novamente');
+
+    const fileName = 'Ciclo_Pago_Guia_de_Gestao_Com_Logos.pdf';
+    const storageUrl = 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/manuais/' + fileName + '?upsert=true';
+
+    const res = await fetch(storageUrl, {
+      method: 'POST',
+      headers: {
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZG9ienlwaG9uY3pncGpybG5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDE2MTUsImV4cCI6MjA5NzIxNzYxNX0.pKh9OGfMF737BQjvlIQFF9LbxmtrgxmOFRrwL5fxqEk',
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/pdf',
+        'x-upsert': 'true'
+      },
+      body: file
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ message: res.statusText }));
+      throw new Error(err.message || 'Falha no upload');
+    }
+
+    const publicUrl = 'https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/manuais/' + fileName;
+
+    const urlInput = document.getElementById('cfg-ebook-url');
+    if (urlInput) urlInput.value = publicUrl;
+
+    config.ebook = config.ebook || {};
+    config.ebook.url = publicUrl;
+
+    status.textContent = '✅ Enviado! Ebook atualizado.';
+    status.style.color = '#22c55e';
+    showToast('Ebook enviado! Clique em Salvar para atualizar o site.');
+
+    setTimeout(async () => {
+      await saveAll();
+      status.textContent += ' (site atualizado)';
+    }, 800);
+  } catch (e) {
+    console.error('uploadEbook erro', e);
+    status.textContent = 'Erro: ' + (e.message || e);
+    status.style.color = '#ef4444';
+    showToast('Falha no upload: ' + (e.message || e), true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⬆️ Upload Ebook';
   }
 }
 

@@ -110,6 +110,13 @@ const SITE_CONFIG_DEFAULTS = {
   androidBanner: {
     text: "📱 Detectamos que você está no Android! O download está otimizado para você.",
     ctaText: "Baixar Agora"
+  },
+  ebook: {
+    title: "Guia do Gestor CicloPago",
+    desc: "Baixe gratuitamente o ebook completo com tutorial, dicas e melhores práticas para gerenciar seus consórcios com eficiência.",
+    btnText: "Baixar Ebook - Guia do Gestor (PDF)",
+    label: "PDF • Gratuito • Atualizado 2026",
+    url: "https://kgdobzyphonczgpjrlnc.supabase.co/storage/v1/object/public/manuais/Ciclo_Pago_Guia_de_Gestao_Com_Logos.pdf"
   }
 };
 

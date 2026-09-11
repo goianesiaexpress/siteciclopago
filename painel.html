@@ -85,6 +85,10 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
           Depoimentos
         </a>
+        <a href="#section-ebook" class="nav-item" data-section="ebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          Ebook
+        </a>
         <a href="#section-rodape" class="nav-item" data-section="rodape">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           Rodapé
@@ -438,6 +442,44 @@
             <label>Depoimentos</label>
             <div id="testimonials-list" class="editable-list"></div>
             <button class="btn-add-item" onclick="addTestimonial()">+ Adicionar Depoimento</button>
+          </div>
+        </section>
+
+        <!-- EBOOK -->
+        <section class="panel-section" id="section-ebook">
+          <div class="section-header">
+            <h2>Ebook / Guia do Gestor</h2>
+            <p>Gerencie o ebook para download</p>
+          </div>
+          <div class="form-group">
+            <label>Título</label>
+            <input type="text" id="cfg-ebook-title" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Descrição</label>
+            <textarea id="cfg-ebook-desc" class="form-textarea" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Texto do Botão</label>
+            <input type="text" id="cfg-ebook-btnText" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Label (ex: "PDF • Gratuito • Atualizado 2026")</label>
+            <input type="text" id="cfg-ebook-label" class="form-input">
+          </div>
+          <div style="background:rgba(52,208,88,0.08);border:1px solid rgba(52,208,88,0.2);border-radius:12px;padding:16px;margin-top:12px">
+            <label style="font-weight:600;display:block;margin-bottom:8px">📤 Enviar Ebook (PDF)</label>
+            <p style="font-size:12px;opacity:0.7;margin-bottom:10px">Selecione o PDF e clique em Upload. O arquivo será enviado para o Supabase Storage e o link será atualizado automaticamente.</p>
+            <input type="file" id="ebookFile" accept=".pdf,application/pdf" class="form-input" style="margin-bottom:10px">
+            <div style="display:flex;gap:10px;align-items:center">
+              <button class="btn btn-primary" id="btnUploadEbook" onclick="uploadEbook()">⬆️ Upload Ebook</button>
+              <span id="ebookUploadStatus" style="font-size:13px;opacity:0.8"></span>
+            </div>
+            <div style="margin-top:10px;font-size:12px;opacity:0.6">Armazenado em: <code>Supabase Storage → manuais/</code> (público). Tamanho máximo 50MB.</div>
+          </div>
+          <div class="form-group" style="margin-top:16px">
+            <label>URL do Arquivo (preenchido automaticamente)</label>
+            <input type="text" id="cfg-ebook-url" class="form-input" readonly style="opacity:0.6">
           </div>
         </section>
 
