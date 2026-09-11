@@ -382,7 +382,7 @@ body {
 
 @keyframes phoneFloat {
   0%, 100% { transform: translateY(0) rotateX(4deg) rotateY(-5deg); }
-  50% { transform: translateY(-18px) rotateX(-3deg) rotateY(5deg); }
+  50% { transform: translateY(-10px) rotateX(-2deg) rotateY(3deg); }
 }
 
 .phone-real {
@@ -546,7 +546,7 @@ body {
 /* ===== SPIN AURA BELOW PHONE ===== */
 .spin-aura {
   position: absolute;
-  bottom: -40px;
+  bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
   width: 300px;
@@ -702,7 +702,7 @@ body {
 
 /* Phone sits inside portal */
 .phone-3d-wrapper {
-  padding-bottom: 20px;
+  padding-bottom: 50px;
 }
 
 /* Hover boost */
