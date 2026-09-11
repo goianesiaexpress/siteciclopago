@@ -36,12 +36,12 @@
       if (svg0) links[0].appendChild(svg0);
       links[0].appendChild(document.createTextNode(' ' + c.hero.ctaText));
     }
-    if (links[1]) {
-      links[1].href = c.hero.secondaryLink;
-      const svg1 = links[1].querySelector('svg');
-      links[1].textContent = '';
-      if (svg1) links[1].appendChild(svg1);
-      links[1].appendChild(document.createTextNode(' ' + c.hero.secondaryText));
+    if (links[2]) {
+      links[2].href = c.hero.secondaryLink;
+      const svg1 = links[2].querySelector('svg');
+      links[2].textContent = '';
+      if (svg1) links[2].appendChild(svg1);
+      links[2].appendChild(document.createTextNode(' ' + c.hero.secondaryText));
     }
   }
 
