@@ -110,6 +110,10 @@
       </div>
       <div class="hero-visual fade-in">
         <div class="phone-3d-wrapper" id="phone3d">
+          <div class="aurora-layer aurora-back">
+            <div class="aurora-ribbon aurora-r1"></div>
+            <div class="aurora-ribbon aurora-r2"></div>
+          </div>
           <div class="phone-real">
             <div class="phone-bezel">
               <div class="phone-camera"></div>
@@ -120,8 +124,14 @@
             </div>
             <div class="phone-bezel-bottom"></div>
           </div>
+          <div class="aurora-layer aurora-front">
+            <div class="aurora-ribbon aurora-r3"></div>
+            <div class="aurora-ribbon aurora-r4"></div>
+            <div class="aurora-ribbon aurora-r5"></div>
+          </div>
           <div class="phone-shadow"></div>
           <div class="phone-glow-effect"></div>
+          <canvas class="aurora-canvas" id="auroraCanvas"></canvas>
         </div>
       </div>
     </div>
@@ -469,6 +479,7 @@
   <script src="site-config.js?v=2"></script>
   <script src="apply-config.js?v=2"></script>
   <script src="script.js?v=2"></script>
+  <script src="aurora-effect.js?v=2"></script>
   <script src="analytics.js?v=2"></script>
 </body>
 </html>
