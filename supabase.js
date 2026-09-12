@@ -18,4 +18,5 @@ if (typeof window !== 'undefined') {
   window.supabaseDB = supabaseClient;
 }
 // Alias global para db.js (evita ReferenceError se db.js usar `supabase`)
+window._supabaseAlias = supabaseClient;
 var supabase = supabaseClient;

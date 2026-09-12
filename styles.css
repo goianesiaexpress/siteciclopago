@@ -52,6 +52,18 @@ body {
   padding: 0 24px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ======= GRADIENT TEXT ======= */
 .gradient-text {
   background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-light) 50%, #A8FF78 100%);
@@ -177,6 +189,7 @@ body {
   padding: 10px 22px;
   font-size: 13px;
   border-radius: 10px;
+  min-height: 44px;
 }
 
 .btn-nav {
@@ -1770,71 +1783,6 @@ body {
   }
 }
 
-/* --- HOW IT WORKS MOBILE --- */
-@media (max-width: 768px) {
-  .how-it-works {
-    padding: 60px 0;
-  }
-
-  .how-it-works-visual {
-    flex-direction: column;
-    gap: 0;
-    padding: 0 16px;
-  }
-
-  .hiw-step {
-    padding: 20px 12px;
-  }
-
-  .hiw-step-number {
-    font-size: 40px;
-  }
-
-  .hiw-step-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    margin-bottom: 14px;
-  }
-
-  .hiw-step-icon svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .hiw-step h3 {
-    font-size: 15px;
-  }
-
-  .hiw-step p {
-    font-size: 12px;
-  }
-
-  .hiw-connector {
-    width: 2px;
-    height: 28px;
-    background: linear-gradient(180deg, var(--green-primary), rgba(52, 208, 88, 0.3));
-  }
-
-  .hiw-connector::before {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-  }
-
-  .hiw-connector::after {
-    bottom: 0;
-    top: auto;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-  }
-}
-
 /* --- HOW TO INSTALL MOBILE --- */
 @media (max-width: 768px) {
   .howto {
@@ -1999,37 +1947,6 @@ body {
   }
 }
 
-/* --- TRUST SECTION MOBILE --- */
-@media (max-width: 768px) {
-  .trust-section {
-    padding: 48px 0;
-  }
-
-  .trust-title {
-    font-size: 18px;
-    margin-bottom: 24px;
-  }
-
-  .trust-badges {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 0 16px;
-  }
-
-  .trust-badge {
-    padding: 12px 14px;
-    font-size: 12px;
-    justify-content: center;
-    border-radius: 10px;
-  }
-
-  .trust-badge svg {
-    width: 16px;
-    height: 16px;
-  }
-}
-
 /* --- FOOTER MOBILE --- */
 @media (max-width: 768px) {
   .footer {
@@ -2190,40 +2107,6 @@ body {
     padding: 24px 16px;
   }
 
-  .hiw-step {
-    padding: 16px 8px;
-  }
-
-  .hiw-step-number {
-    font-size: 36px;
-  }
-
-  .hiw-step-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 12px;
-  }
-
-  .hiw-step-icon svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .trust-badges {
-    grid-template-columns: 1fr;
-  }
-
-  .trust-badge {
-    justify-content: flex-start;
-    padding: 10px 12px;
-    font-size: 11px;
-  }
-
-  .trust-badge svg {
-    width: 14px;
-    height: 14px;
-  }
-
   .step-number {
     width: 32px;
     height: 32px;
@@ -2265,10 +2148,6 @@ body {
   .feature-card:hover,
   .metric-card:hover,
   .testimonial-card:hover {
-    transform: none;
-  }
-
-  .hiw-step:hover .hiw-step-icon {
     transform: none;
   }
 }
@@ -2485,55 +2364,6 @@ body {
 }
 
 /* ========================================
-   TRUST SECTION
-   ======================================== */
-.trust-section {
-  padding: 80px 0;
-}
-
-.trust-content {
-  text-align: center;
-}
-
-.trust-title {
-  font-size: clamp(20px, 2.5vw, 28px);
-  font-weight: 700;
-  margin-bottom: 40px;
-  letter-spacing: -0.5px;
-}
-
-.trust-badges {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.trust-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
-  background: rgba(26, 26, 29, 0.5);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition: var(--transition);
-}
-
-.trust-badge:hover {
-  background: rgba(52, 208, 88, 0.08);
-  border-color: rgba(52, 208, 88, 0.2);
-  color: var(--green-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
-/* ========================================
    FOOTER SOCIAL LINKS
    ======================================== */
 .footer-social {
@@ -2659,15 +2489,6 @@ body {
 @media (max-width: 768px) {
   .testimonials-grid {
     grid-template-columns: 1fr;
-  }
-  .trust-badges {
-    flex-direction: column;
-    align-items: center;
-  }
-  .trust-badge {
-    width: 100%;
-    max-width: 280px;
-    justify-content: center;
   }
   .back-to-top {
     bottom: 20px;
@@ -3226,143 +3047,6 @@ section:hover::before {
 }
 
 /* ========================================
-   TRUST BADGE ANIMATION
-   ======================================== */
-.trust-badge {
-  position: relative;
-  overflow: hidden;
-}
-
-.trust-badge::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(52, 208, 88, 0.1), transparent);
-  transition: left 0.5s ease;
-}
-
-.trust-badge:hover::before {
-  left: 100%;
-}
-
-/* ========================================
-   HOW IT WORKS SECTION
-   ======================================== */
-.how-it-works {
-  padding: 100px 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.how-it-works-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.hiw-step {
-  flex: 1;
-  text-align: center;
-  padding: 32px 24px;
-  position: relative;
-}
-
-.hiw-step-number {
-  font-size: 64px;
-  font-weight: 900;
-  background: linear-gradient(135deg, rgba(52, 208, 88, 0.15), rgba(52, 208, 88, 0.05));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  margin-bottom: 16px;
-}
-
-.hiw-step-icon {
-  width: 80px;
-  height: 80px;
-  background: rgba(52, 208, 88, 0.08);
-  border: 2px solid rgba(52, 208, 88, 0.15);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  transition: var(--transition);
-}
-
-.hiw-step:hover .hiw-step-icon {
-  transform: scale(1.1) rotate(5deg);
-  background: rgba(52, 208, 88, 0.12);
-  border-color: rgba(52, 208, 88, 0.3);
-  box-shadow: 0 0 30px rgba(52, 208, 88, 0.2);
-}
-
-.hiw-step h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  letter-spacing: -0.02em;
-}
-
-.hiw-step p {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 220px;
-  margin: 0 auto;
-}
-
-.hiw-connector {
-  width: 80px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--green-primary), rgba(52, 208, 88, 0.3));
-  position: relative;
-  flex-shrink: 0;
-}
-
-.hiw-connector::before,
-.hiw-connector::after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.hiw-connector::before {
-  left: 0;
-  background: var(--green-primary);
-  box-shadow: 0 0 10px rgba(52, 208, 88, 0.5);
-}
-
-.hiw-connector::after {
-  right: 0;
-  background: rgba(52, 208, 88, 0.3);
-}
-
-.waves-bg {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  pointer-events: none;
-}
-
-.waves-bg svg {
-  width: 100%;
-  height: auto;
-}
-
-/* ========================================
    FEATURE GLOW EFFECT
    ======================================== */
 .feature-glow {
@@ -3437,42 +3121,4 @@ section:hover::before {
 
 .newsletter-btn {
   white-space: nowrap;
-}
-
-/* ========================================
-   RESPONSIVE - HOW IT WORKS
-   ======================================== */
-@media (max-width: 768px) {
-  .how-it-works-visual {
-    flex-direction: column;
-    gap: 0;
-  }
-  
-  .hiw-connector {
-    width: 2px;
-    height: 40px;
-    background: linear-gradient(180deg, var(--green-primary), rgba(52, 208, 88, 0.3));
-  }
-  
-  .hiw-connector::before {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .hiw-connector::after {
-    bottom: 0;
-    top: auto;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-  }
-  
-  .newsletter-form {
-    flex-direction: column;
-  }
-  
-  .newsletter-btn {
-    width: 100%;
-  }
 }

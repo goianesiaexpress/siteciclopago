@@ -13,6 +13,15 @@
   <noscript><style>.loading-screen{display:none !important}.fade-in{opacity:1 !important;transform:none !important}</style></noscript>
   <style>.loading-screen{animation: autoHideLoading 0.5s ease 4s forwards}@keyframes autoHideLoading{to{opacity:0;visibility:hidden;pointer-events:none}}</style>
   <meta name="google-site-verification" content="g8X26tnKTxTgumwPdxPLltzaNakVKNn90J3jxBvA4oY" />
+  <meta property="og:title" content="CicloPago - Gestão Inteligente de Consórcios">
+  <meta property="og:description" content="Gerencie seus consórcios com inteligência. Acompanhe pagamentos, grupos, parcelas e progresso financeiro com segurança total.">
+  <meta property="og:url" content="https://ciclopago.com.br">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://ciclopago.com.br/assets/logo_app.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CicloPago - Gestão Inteligente de Consórcios">
+  <meta name="twitter:description" content="Gerencie seus consórcios com inteligência. Acompanhe pagamentos, grupos, parcelas e progresso financeiro com segurança total.">
+  <meta name="twitter:image" content="https://ciclopago.com.br/assets/logo_app.png">
 </head>
 <body>
 
@@ -56,7 +65,7 @@
         <a href="#faq">FAQ</a>
       </nav>
       <a href="#download" class="btn btn-primary btn-nav">Baixar APK</a>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -65,7 +74,7 @@
   <!-- SCROLL PROGRESS -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- HERO SECTION -->
+  <main>
   <section id="inicio" class="hero">
     <canvas id="particlesCanvas" class="particles-canvas"></canvas>
     <div class="hero-bg-glow"></div>
@@ -123,7 +132,7 @@
               <div class="phone-speaker"></div>
             </div>
             <div class="phone-screen-real">
-              <video src="assets/ciclopagoapp.mp4" class="phone-video" autoplay muted loop playsinline></video>
+              <video src="assets/ciclopagoapp.mp4" class="phone-video" autoplay muted loop playsinline preload="metadata"></video>
             </div>
             <div class="phone-bezel-bottom"></div>
           </div>
@@ -305,40 +314,40 @@
         <span class="section-tag">Dúvidas</span>
         <h2 class="section-title">Perguntas <span class="gradient-text">Frequentes</span></h2>
       </div>
-      <div class="faq-list">
+        <div class="faq-list">
         <div class="faq-item fade-in">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-0">
             <span>Por que baixar o APK direto do site?</span>
             <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-0" role="region">
             <p>A instalação direta via APK garante atualizações rápidas, sem depender de lojas de aplicativos, com total controle sobre as versões e sem intermediários. Você sempre terá a versão mais recente do CicloPago.</p>
           </div>
         </div>
         <div class="faq-item fade-in">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
             <span>O aplicativo é seguro?</span>
             <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-1" role="region">
             <p>Sim! O CicloPago utiliza autenticação segura e banco de dados criptografado, garantindo que seus dados estejam sempre protegidos com as melhores tecnologias de segurança.</p>
           </div>
         </div>
         <div class="faq-item fade-in">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
             <span>Preciso de internet para usar?</span>
             <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-2" role="region">
             <p>O aplicativo sincroniza seus dados com a nuvem, garantindo que suas informações estejam sempre seguras e acessíveis. Para a melhor experiência, recomendamos conexão com a internet durante o uso.</p>
           </div>
         </div>
         <div class="faq-item fade-in">
-          <button class="faq-question" aria-expanded="false">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
             <span>Quais são os requisitos mínimos do sistema?</span>
             <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-3" role="region">
             <p>O CicloPago é compatível com dispositivos Android 8.0 (Oreo) ou superior. Recomendamos pelo menos 2 GB de RAM para uma experiência fluida.</p>
           </div>
         </div>
@@ -442,6 +451,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -481,7 +491,8 @@
         <h4>Receba atualizações</h4>
         <p>Fique por dentro das novidades e versões do CicloPago.</p>
         <div class="newsletter-form">
-          <input type="email" placeholder="Seu melhor e-mail" class="newsletter-input">
+          <label for="newsletterEmail" class="sr-only">E-mail</label>
+          <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" class="newsletter-input">
           <button class="btn btn-primary btn-sm newsletter-btn">Inscrever</button>
         </div>
       </div>
@@ -496,6 +507,48 @@
   <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
+
+  <!-- JSON-LD FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Por que baixar o APK direto do site?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A instalação direta via APK garante atualizações rápidas, sem depender de lojas de aplicativos, com total controle sobre as versões e sem intermediários."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "O aplicativo é seguro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim! O CicloPago utiliza autenticação segura e banco de dados criptografado, garantindo que seus dados estejam sempre protegidos."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Preciso de internet para usar?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "O aplicativo sincroniza seus dados com a nuvem. Para a melhor experiência, recomendamos conexão com a internet durante o uso."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quais são os requisitos mínimos do sistema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "O CicloPago é compatível com dispositivos Android 8.0 (Oreo) ou superior. Recomendamos pelo menos 2 GB de RAM."
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- ANDROID BANNER -->
   <div id="androidBanner" class="android-banner" style="display:none;">

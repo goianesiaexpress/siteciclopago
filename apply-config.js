@@ -162,24 +162,9 @@
       dlBtn.style.pointerEvents = 'auto';
       dlBtn.style.opacity = '1';
       dlBtn.removeAttribute('target');
-      // Força download direto (funciona mesmo cross-origin)
       dlBtn.onclick = function(e) {
         e.preventDefault();
-        const url = this.href;
-        // Tenta fetch+blob para garantir download com nome correto
-        fetch(url).then(r=>{
-          if(!r.ok) throw new Error('fetch '+r.status);
-          return r.blob();
-        }).then(b=>{
-          const blobUrl = URL.createObjectURL(b);
-          const a = document.createElement('a');
-          a.href = blobUrl; a.download = 'ciclopago.apk';
-          document.body.appendChild(a); a.click();
-          setTimeout(()=>{ URL.revokeObjectURL(blobUrl); a.remove(); }, 1500);
-        }).catch(()=>{
-          // Fallback: navega direto (Content-Disposition: attachment faz download)
-          window.location.href = url;
-        });
+        window.location.href = this.href;
         return false;
       };
       const svg = dlBtn.querySelector('svg');
@@ -225,13 +210,25 @@
           if (num) num.textContent = s.number;
           if (h3) h3.textContent = s.title;
           if (p) {
-            // Sanitiza: só permite <strong>, <b>, <em>, <br>
-            const sanitized = String(s.desc).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-              .replace(/&lt;strong&gt;/g,'<strong>').replace(/&lt;\/strong&gt;/g,'</strong>')
-              .replace(/&lt;b&gt;/g,'<b>').replace(/&lt;\/b&gt;/g,'</b>')
-              .replace(/&lt;em&gt;/g,'<em>').replace(/&lt;\/em&gt;/g,'</em>')
-              .replace(/&lt;br&gt;/g,'<br>').replace(/&lt;br\/&gt;/g,'<br>');
-            p.innerHTML = sanitized;
+            // Sanitiza via DOMParser: só permite <strong>, <b>, <em>, <br>
+            const raw = String(s.desc);
+            const doc = new DOMParser().parseFromString('<div>' + raw + '</div>', 'text/html');
+            const allowed = new Set(['STRONG','B','EM','BR']);
+            function sanitizeNode(node) {
+              for (const child of [...node.childNodes]) {
+                if (child.nodeType === 1) {
+                  if (!allowed.has(child.tagName)) {
+                    child.replaceWith(...child.childNodes);
+                    sanitizeNode(node);
+                  } else {
+                    [...child.attributes].forEach(a => child.removeAttribute(a.name));
+                    sanitizeNode(child);
+                  }
+                }
+              }
+            }
+            sanitizeNode(doc.body.firstChild);
+            p.innerHTML = doc.body.firstChild.innerHTML;
           }
         }
       });
@@ -330,14 +327,7 @@
       bannerBtn.removeAttribute('target');
       bannerBtn.onclick = function(e) {
         e.preventDefault();
-        const url = this.href;
-        fetch(url).then(r=>r.blob()).then(b=>{
-          const blobUrl = URL.createObjectURL(b);
-          const a = document.createElement('a');
-          a.href = blobUrl; a.download = 'ciclopago.apk';
-          document.body.appendChild(a); a.click();
-          setTimeout(()=>{ URL.revokeObjectURL(blobUrl); a.remove(); }, 1500);
-        }).catch(()=>{ window.location.href = url; });
+        window.location.href = this.href;
         return false;
       };
     }
@@ -351,14 +341,7 @@
       bannerBtn.setAttribute('download', 'ciclopago.apk');
       bannerBtn.onclick = function(e) {
         e.preventDefault();
-        const url = this.href;
-        fetch(url).then(r=>r.blob()).then(b=>{
-          const blobUrl = URL.createObjectURL(b);
-          const a = document.createElement('a');
-          a.href = blobUrl; a.download = 'ciclopago.apk';
-          document.body.appendChild(a); a.click();
-          setTimeout(()=>{ URL.revokeObjectURL(blobUrl); a.remove(); }, 1500);
-        }).catch(()=>{ window.location.href = url; });
+        window.location.href = this.href;
         return false;
       };
     }
