@@ -318,7 +318,7 @@ async function saveAll() {
   config.faq = {
     tag: getText('cfg-faq-tag'),
     titleHighlight: getText('cfg-faq-titleHighlight'),
-    title: 'Perguntas',
+    title: getText('cfg-faq-title') || 'Perguntas',
     items: config.faq?.items || []
   };
 

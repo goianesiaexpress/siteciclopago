@@ -114,37 +114,6 @@
     }
   }
 
-  // How It Works
-  if (c.howItWorks) {
-    const hiwTag = document.querySelector('.how-it-works .section-tag');
-    if (hiwTag) hiwTag.textContent = c.howItWorks.tag;
-    const hiwTitle = document.querySelector('.how-it-works .section-title');
-    if (hiwTitle) {
-      hiwTitle.textContent = '';
-      hiwTitle.appendChild(document.createTextNode(c.howItWorks.title + ' '));
-      const span = document.createElement('span');
-      span.className = 'gradient-text';
-      span.textContent = c.howItWorks.titleHighlight;
-      hiwTitle.appendChild(span);
-    }
-    const hiwSub = document.querySelector('.how-it-works .section-subtitle');
-    if (hiwSub) hiwSub.textContent = c.howItWorks.subtitle;
-
-    const hiwSteps = document.querySelectorAll('.hiw-step');
-    if (c.howItWorks.steps) {
-      c.howItWorks.steps.forEach((s, i) => {
-        if (hiwSteps[i]) {
-          const num = hiwSteps[i].querySelector('.hiw-step-number');
-          const h3 = hiwSteps[i].querySelector('h3');
-          const p = hiwSteps[i].querySelector('p');
-          if (num) num.textContent = s.number;
-          if (h3) h3.textContent = s.title;
-          if (p) p.textContent = s.desc;
-        }
-      });
-    }
-  }
-
   // Download
   if (c.download) {
     const dlTitle = document.querySelector('.download-title');
@@ -351,7 +320,6 @@
   if (c.ebook) {
     const ebookTitle = document.querySelector('[data-ebook-title]');
     if (ebookTitle) {
-      ebookTitle.textContent = '';
       ebookTitle.textContent = c.ebook.title || 'Guia do Gestor CicloPago';
     }
     const ebookDesc = document.querySelector('[data-ebook-desc]');

@@ -26,14 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     }
 
-    // ======= HERO PARALLAX ON SCROLL =======
-    const heroParallax = document.getElementById('heroParallax');
-    if (heroParallax && window.innerWidth > 768) {
-      window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        heroParallax.style.transform = `translateY(${scrolled * 0.3}px)`;
-      });
-    }
+  // ======= HERO PARALLAX ON SCROLL =======
+  const heroParallax = document.getElementById('heroParallax');
+  const hasParallax = heroParallax && window.innerWidth > 768;
   }
 
   // ======= SCROLL FADE-IN ANIMATIONS =======
@@ -90,6 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Back to top
         if (backToTop) {
           backToTop.classList.toggle('visible', window.scrollY > 500);
+        }
+
+        // Hero parallax
+        if (hasParallax) {
+          heroParallax.style.transform = `translateY(${currentScrollY * 0.3}px)`;
         }
 
         scrollTicking = false;
@@ -409,33 +409,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ======= SCROLL PROGRESS INDICATOR =======
-  const scrollProgress = document.getElementById('scrollProgress');
-  if (scrollProgress) {
-    window.addEventListener('scroll', () => {
-      const scrollTop = document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (scrollTop / scrollHeight) * 100;
-      scrollProgress.style.width = progress + '%';
-    });
-  }
-
-  // ======= BACK TO TOP BUTTON =======
-  const backToTop = document.getElementById('backToTop');
-  if (backToTop) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 500) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    });
-
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
   // ======= SMOOTH SCROLL FOR ANCHOR LINKS =======
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -463,26 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cursorGlow.style.top = e.clientY + 'px';
     });
   }
-
-  // ======= HOW IT WORKS STEPS ANIMATION =======
-  const hiwSteps = document.querySelectorAll('.hiw-step');
-  const hiwObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, index * 200);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  hiwSteps.forEach(step => {
-    step.style.opacity = '0';
-    step.style.transform = 'translateY(30px)';
-    step.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    hiwObserver.observe(step);
-  });
 
   // ======= NEWSLETTER FORM INTERACTION =======
   const newsletterInput = document.querySelector('.newsletter-input');

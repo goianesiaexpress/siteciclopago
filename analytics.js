@@ -168,10 +168,18 @@ const Analytics = (() => {
       if (document.visibilityState === 'visible') heartbeatOnline();
     });
     setupRealtimePresence();
-    // Polling fallback para online/total a cada 30s
+    // Polling fallback para online/total a cada 30s (pausa quando aba oculta)
     fetchTotal();
     fetchOnlineCount();
-    setInterval(() => { fetchOnlineCount(); fetchTotal(); }, 30 * 1000);
+    let pollingInterval = setInterval(() => { fetchOnlineCount(); fetchTotal(); }, 30 * 1000);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        clearInterval(pollingInterval);
+        pollingInterval = null;
+      } else if (!pollingInterval) {
+        pollingInterval = setInterval(() => { fetchOnlineCount(); fetchTotal(); }, 30 * 1000);
+      }
+    });
   }
 
   // Auto-init quando DOM pronto e supabase carregado

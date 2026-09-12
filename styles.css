@@ -64,7 +64,28 @@ body {
   border: 0;
 }
 
-/* ======= GRADIENT TEXT ======= */
+/* ========================================
+   FOCUS VISIBLE STYLES
+   ======================================== */
+:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 3px;
+}
+
+.faq-question:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: -2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ========================================
+   GRADIENT TEXT
+   ======================================== */
 .gradient-text {
   background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-light) 50%, #A8FF78 100%);
   -webkit-background-clip: text;
