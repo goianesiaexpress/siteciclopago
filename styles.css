@@ -385,17 +385,11 @@ body {
 .phone-3d-wrapper {
   position: relative;
   transform-style: preserve-3d;
-  animation: phoneFloat 6s ease-in-out infinite;
   cursor: grab;
 }
 
 .phone-3d-wrapper:active {
   cursor: grabbing;
-}
-
-@keyframes phoneFloat {
-  0%, 100% { transform: translateY(0) rotateX(4deg) rotateY(-5deg); }
-  50% { transform: translateY(-10px) rotateX(-2deg) rotateY(3deg); }
 }
 
 .phone-real {
@@ -1587,12 +1581,7 @@ body {
   }
 
   .phone-3d-wrapper {
-    animation: phoneFloatMobile 6s ease-in-out infinite;
-  }
-
-  @keyframes phoneFloatMobile {
-    0%, 100% { transform: translateY(0) rotateX(4deg) rotateY(-5deg) scale(0.9); }
-    50% { transform: translateY(-12px) rotateX(-3deg) rotateY(5deg) scale(0.9); }
+    transform: scale(0.9);
   }
 
   .spin-aura {
@@ -2819,24 +2808,6 @@ section::before {
 
 section:hover::before {
   opacity: 1;
-}
-
-/* ========================================
-   FLOATING ANIMATION ENHANCED
-   ======================================== */
-@keyframes floatEnhanced {
-  0%, 100% {
-    transform: translateY(0) rotateX(4deg) rotateY(-5deg);
-    filter: drop-shadow(0 20px 40px rgba(52, 208, 88, 0.1));
-  }
-  50% {
-    transform: translateY(-20px) rotateX(-3deg) rotateY(5deg);
-    filter: drop-shadow(0 30px 60px rgba(52, 208, 88, 0.15));
-  }
-}
-
-.phone-3d-wrapper {
-  animation: floatEnhanced 6s ease-in-out infinite;
 }
 
 /* ========================================

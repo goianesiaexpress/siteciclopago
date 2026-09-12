@@ -220,10 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const distance = Math.abs(targetX - currentX) + Math.abs(targetY - currentY);
       if (distance > 0.01) {
-        phone3d.style.animationPlayState = 'paused';
-        phone3d.style.transform = `rotateX(${currentY}deg) rotateY(${currentX}deg) translateY(0)`;
+        phone3d.style.transform = `rotateX(${currentY}deg) rotateY(${currentX}deg)`;
       } else if (targetX === 0 && targetY === 0) {
-        phone3d.style.animationPlayState = 'running';
         phone3d.style.transform = '';
       }
 
