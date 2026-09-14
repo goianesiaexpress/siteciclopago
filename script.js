@@ -17,6 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initAnimations();
   }
 
+  // ======= ANDROID VIEWPORT HEIGHT FIX =======
+  function setVH() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  setVH();
+  window.addEventListener('resize', setVH);
+  window.addEventListener('orientationchange', () => {
+    setTimeout(setVH, 100);
+  });
+
   function initAnimations() {
     // ======= TYPEWRITER EFFECT =======
     const typewriter = document.getElementById('typewriter');
@@ -100,6 +111,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  // ======= ORIENTATION CHANGE HANDLER =======
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      setVH();
+      // Recalculate particle canvas
+      const canvas = document.getElementById('particlesCanvas');
+      if (canvas) {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      // Reset header transform on orientation change
+      if (header) {
+        header.style.transform = '';
+      }
+    }, 100);
+  }, { passive: true });
+
   if (backToTop) {
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -138,13 +166,40 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'auto';
       }
     });
+
+    // Close menu on swipe down (mobile)
+    let touchStartY = 0;
+    navLinks.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    navLinks.addEventListener('touchmove', (e) => {
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchY - touchStartY;
+      if (deltaY > 50) {
+        navLinks.classList.remove('active');
+        mobileToggle.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    }, { passive: true });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        mobileToggle.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
   }
 
   // ======= FAQ ACCORDION =======
   const faqItems = document.querySelectorAll('.faq-item');
   faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
-    question.addEventListener('click', () => {
+    
+    // Touch-friendly click handler
+    const handleToggle = () => {
       const isActive = item.classList.contains('active');
       
       // Close all items with smooth animation
@@ -167,7 +222,16 @@ document.addEventListener('DOMContentLoaded', () => {
           }, 100);
         }
       }
-    });
+    };
+    
+    question.addEventListener('click', handleToggle);
+    question.addEventListener('touchend', (e) => {
+      // Prevent double-tap zoom on FAQ questions
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        handleToggle();
+      }
+    }, { passive: false });
   });
 
   // ======= ANDROID DEVICE DETECTION =======
@@ -175,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const isAndroid = /android/i.test(ua);
   const androidBanner = document.getElementById('androidBanner');
   const closeBanner = document.getElementById('closeBanner');
+  const bannerDownloadBtn = document.getElementById('bannerDownloadBtn');
 
   if (isAndroid && androidBanner) {
     androidBanner.style.display = 'block';
@@ -193,6 +258,26 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.paddingBottom = '0';
     });
   }
+
+  // Prevent pull-to-refresh on Android banner
+  if (androidBanner) {
+    androidBanner.addEventListener('touchstart', (e) => {
+      e.stopPropagation();
+    }, { passive: true });
+  }
+
+  // Track download clicks for analytics
+  const downloadLinks = document.querySelectorAll('a[download], a[href$=".apk"]');
+  downloadLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'download', {
+          'method': 'apk_direct',
+          'file_name': 'ciclopago.apk'
+        });
+      }
+    });
+  });
 
   // ======= 3D PHONE TILT ON MOUSE MOVE (Desktop) =======
   const phone3d = document.getElementById('phone3d');
@@ -228,6 +313,34 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(animatePhone);
     }
     requestAnimationFrame(animatePhone);
+  }
+
+  // ======= TOUCH GESTURE FOR PHONE 3D (Mobile) =======
+  const phoneWrapper = document.querySelector('.phone-3d-wrapper');
+  if (phoneWrapper && 'ontouchstart' in window) {
+    let startX = 0, startY = 0;
+    let currentRotateX = 0, currentRotateY = 0;
+
+    phoneWrapper.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+
+    phoneWrapper.addEventListener('touchmove', (e) => {
+      const deltaX = e.touches[0].clientX - startX;
+      const deltaY = e.touches[0].clientY - startY;
+      currentRotateY = (deltaX / window.innerWidth) * 30;
+      currentRotateX = -(deltaY / window.innerHeight) * 20;
+      phoneWrapper.style.transform = `rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg)`;
+    }, { passive: true });
+
+    phoneWrapper.addEventListener('touchend', () => {
+      phoneWrapper.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      phoneWrapper.style.transform = '';
+      setTimeout(() => {
+        phoneWrapper.style.transition = '';
+      }, 500);
+    }, { passive: true });
   }
 
   // ======= PARTICLES SYSTEM (Desktop only for performance) =======

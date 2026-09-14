@@ -14,6 +14,7 @@
   --radius: 10px;
   --radius-sm: 6px;
   --sidebar-width: 260px;
+  --vh: 1vh;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,6 +40,7 @@ body {
   left: 0;
   width: var(--sidebar-width);
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background: var(--bg-card);
   border-right: 1px solid var(--border);
   display: flex;
@@ -423,6 +425,112 @@ body {
   }
 }
 
+/* SAFE AREA FOR NOTCH DEVICES */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .sections-container {
+    padding-bottom: calc(60px + env(safe-area-inset-bottom));
+  }
+
+  .sidebar {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@supports (padding: env(safe-area-inset-top)) {
+  .topbar {
+    padding-top: calc(14px + env(safe-area-inset-top));
+  }
+}
+
+/* TOUCH OPTIMIZATIONS */
+@media (hover: none) and (pointer: coarse) {
+  .btn {
+    min-height: 48px;
+  }
+
+  .nav-item {
+    min-height: 48px;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 16px !important;
+  }
+
+  .btn-remove-item,
+  .btn-add-item,
+  .menu-toggle,
+  .sidebar-close,
+  .btn-logout {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .editable-item:hover {
+    transform: none;
+  }
+}
+
+/* ANDROID SPECIFIC */
+@media (max-width: 768px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  .btn,
+  .nav-item,
+  .form-input,
+  .form-textarea,
+  .editable-item {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* HIGH DPI */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .sidebar-logo,
+  .login-logo {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* LANDSCAPE MOBILE */
+@media (max-height: 500px) and (orientation: landscape) {
+  .topbar {
+    padding: 10px 16px;
+  }
+
+  .sections-container {
+    padding: 16px 16px 40px;
+  }
+
+  .section-header {
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+}
+
 /* BACKDROP */
 .sidebar-backdrop {
   display: none;
@@ -442,6 +550,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   padding: 20px;
 }
 

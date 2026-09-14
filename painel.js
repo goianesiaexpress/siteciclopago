@@ -7,6 +7,17 @@ const toast = document.getElementById('toast');
 const toastMsg = document.getElementById('toastMsg');
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Android viewport height fix
+  function setVH() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  setVH();
+  window.addEventListener('resize', setVH);
+  window.addEventListener('orientationchange', () => {
+    setTimeout(setVH, 100);
+  });
+
   checkAuth();
   setupLoginForm();
   setupNavigation();
@@ -141,6 +152,21 @@ function setupSidebar() {
   backdrop.className = 'sidebar-backdrop';
   backdrop.addEventListener('click', closeSidebar);
   document.body.appendChild(backdrop);
+
+  // Swipe to close sidebar on mobile
+  const sidebar = document.getElementById('sidebar');
+  let touchStartX = 0;
+  sidebar.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  sidebar.addEventListener('touchmove', (e) => {
+    const touchX = e.touches[0].clientX;
+    const deltaX = touchStartX - touchX;
+    if (deltaX > 50) {
+      closeSidebar();
+    }
+  }, { passive: true });
 }
 
 function closeSidebar() {
